@@ -1,44 +1,43 @@
-import React, { createContext, useEffect, useReducer, useState } from 'react'
-import TasksReducer from '../../reducers/taskReducer'
+import React, { createContext, useEffect, useState } from 'react'
 
 export const TasksContext = createContext()
 
 export default function TasksProvider ({ children }) {
 
-  const [stateTasks, setTasks] = useState([])
-  const [tasks, dispatch] = useReducer(TasksReducer, (() => {
-    const storedTasks = localStorage.getItem('tasks')
-    return storedTasks ? JSON.parse(storedTasks) : []
-  })())
+  const [tasks, setTasks] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const storedTasks = localStorage.getItem('tasks')
     if (storedTasks) {
       setTasks(JSON.parse(storedTasks))
     }
+    setLoading(false)
   }, [])
 
   const addTask = (taskInput) => {
     if (taskInput === '') {
       return
     }
-    dispatch({ type: 'ADD_TASK', payload: {
+    // TODO: Call classifier
+    const newTasks = [...tasks]
+    saveTasks([...newTasks, {
       name: taskInput,
       completed: false,
       tags: []
-    }})
+    }])
   }
 
   const cleanCompletedTasks = () => {
-    dispatch({ type: 'CLEAN_COMPLETED_TASKS' })
+    saveTasks(tasks.filter(task => !task.completed))
   }
 
   const removeTask = (index) => {
-    dispatch({ type: 'REMOVE_TASK', payload: index })
+    saveTasks(tasks.filter((_, i) => index !== i))
   }
 
   const toggleTask = (index) => {
-    const newTasks = [...stateTasks]
+    const newTasks = [...tasks]
     newTasks[index].completed = !newTasks[index].completed
     saveTasks(newTasks)
   }
@@ -49,11 +48,12 @@ export default function TasksProvider ({ children }) {
   }
 
   const elements = {
-    tasks,
+    tasks : tasks,
     addTask,
     cleanCompletedTasks,
     removeTask,
-    toggleTask
+    toggleTask,
+    loading
   }
   
   return (
