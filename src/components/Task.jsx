@@ -1,28 +1,22 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styles from '../styles/Task.module.css'
 
-export default function Task({ task, index, removeTask }) {
-
-  const [completed, setCompleted] = useState(task.completed)
-
-  const handleCompleteClick = () => {
-    setCompleted(!completed)
-  }
+export default function Task({ task, index, removeTask, toggleTask }) {
 
   return (
-    <li className={`${completed ? styles.completed : ''}`}>
+    <li className={`${task.completed ? styles.completed : ''}`}>
       <div className={`${styles.task}`}>
         <div className={styles.checkbox}>
           <input 
             type="checkbox"
-            checked={completed}
-            onClick={handleCompleteClick}
+            checked={task.completed}
+            onClick={() => toggleTask(index)}
             readOnly
           />
         </div>
         <span 
           className={styles.taskName}
-          onClick={handleCompleteClick}>{task.name}</span>
+          onClick={() => toggleTask(index)}>{task.name}</span>
         <div className={styles.tags}>
           <span className={styles.tag}>tag</span>
         </div>

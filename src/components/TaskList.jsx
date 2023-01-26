@@ -15,7 +15,7 @@ export default function TaskList() {
           task={task}
           index={index}
           removeTask={tasks.removeTask} 
-          toogleTask={tasks.toogleTask}
+          toggleTask={tasks.toggleTask}
         />
       ))}
     </ul>
