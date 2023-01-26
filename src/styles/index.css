@@ -1,0 +1,163 @@
+:root {
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5rem;
+  font-weight: 400;
+
+  color-scheme: light dark;
+
+  --background-color: #231F20;
+  --text-color: #efe6dd;
+
+  color: var(--text-color);
+  background-color: var(--background-color);
+
+  --color-primary: #7ebdc2;
+  --color-primary-hover: #7ebdc2;
+  --color-primary-active: #7ebdc2;
+  --color-primary-invert: #231F20;
+  --color-primary-opacity: rgba(126, 189, 194, 0.1);
+
+  --color-secondary: #bb4430;
+  --color-secondary-hover: #bb4430;
+  --color-secondary-active: #a03522;
+  --color-secondary-invert: #efe6dd;
+
+  --color-tertiary: #f3dfa2;
+  --color-tertiary-hover: #f3dfa2;
+  --color-tertiary-active: #e7b82a;
+  --color-tertiary-invert: #231F20;
+
+  --submit-button-color: var(--color-primary);
+  --submit-button-color-hover: var(--color-primary-hover);
+  --submit-button-color-active: var(--color-primary-active);
+  --submit-button-color-invert: var(--color-primary-invert);
+
+  --cancel-button-color: var(--color-secondary);
+  --cancel-button-color-hover: var(--color-secondary-hover);
+  --cancel-button-color-active: var(--color-secondary-active);
+  --cancel-button-color-invert: var(--color-secondary-invert);
+
+  --input-color: var(--color-primary);
+  --input-color-hover: var(--color-primary-hover);
+  --input-color-active: var(--color-primary-active);
+  --input-bgcolor-active: var(--color-primary-opacity);
+
+  accent-color: var(--color-primary);
+
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  font-weight: 500;
+  color: var(--color-primary);
+  text-decoration: inherit;
+}
+a:hover {
+  color: var(--color-primary-hover);
+}
+
+body {
+  margin: 0;
+  display: flex;
+  min-width: 10rem;
+  min-height: 100vh;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+main {
+  padding: 0;
+  width: 100%;
+  max-width: 56rem;
+}
+
+h1 {
+  font-size: 1.8rem;
+  line-height: 1.1;
+  padding: 1rem 0 0;
+}
+
+button {
+  border-radius: 0.4rem;
+  border: 1px solid transparent;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: var(--submit-button-color);
+  color: var(--submit-button-color-invert);
+  cursor: pointer;
+  transition: background-color 0.25s, color 0.1s;
+}
+button:hover {
+  background-color: var(--submit-button-color-hover);
+}
+button:focus,
+button:focus-visible {
+  outline: none;
+  background-color: var(--submit-button-color-active);
+}
+button:active {
+  background-color: var(--submit-button-color-active);
+}
+button:disabled {
+  background-color: var(--submit-button-color-invert);
+  color: var(--submit-button-color);
+  cursor: not-allowed;
+}
+
+input {
+  border-radius: 0.4rem;
+  border: 1px solid var(--color-primary);
+  padding: 1rem 1rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: var(--color-primary-invert);
+  transition: border-color 0.25s, background-color 0.25s;
+}
+input:focus,
+input:focus-visible {
+  outline: none;
+  background-color: var(--input-bgcolor-active);
+}
+
+input[type="checkbox"] {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked {
+  background-color: var(--color-primary);
+}
+
+
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --background-color: #EFE6DD;
+    --text-color: #231F20;
+  }
+  /* TODO: Add light theme colors */
+}

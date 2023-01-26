@@ -1,0 +1,58 @@
+.completed {
+  background-color: var(--color-primary-opacity);
+}
+
+
+.task {
+  display: flex;
+  align-items: center;
+  justify-content: space-arround;
+  gap: 1rem;
+  width: 100%;
+}
+
+.checkbox {
+  padding: 0 0 0 1rem;
+}
+
+.taskName{
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+.tag {
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 0.4rem;
+  margin-right: 0.5rem;
+  background-color: var(--color-tertiary);
+  color: var(--color-tertiary-invert);
+}
+
+
+.remove {
+  border: none;
+  outline: none;
+  font-size: 1.4rem;
+  font-family: inherit;
+  color: inherit;
+  background-color: transparent;
+  cursor: pointer;
+  margin: 0 .5rem;
+}
+
+.remove:hover {
+  background-color: var(--color-secondary);
+  color: var(--color-secondary-invert);
+}
+
+.remove:focus,
+.remove:focus-visible {
+  outline: none;
+  background-color: var(--color-secondary);
+  color: var(--color-secondary-invert);
+}
