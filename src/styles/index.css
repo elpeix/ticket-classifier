@@ -175,6 +175,11 @@ input:focus-visible {
 }
 
 
+.highlight {
+  background-color: var(--color-tertiary);
+  color: var(--color-tertiary-invert);
+}
+
 
 
 @media (prefers-color-scheme: light) {

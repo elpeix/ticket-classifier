@@ -15,11 +15,10 @@ export default function TaskList() {
       )}
       { !empty && (
         <ul className={styles.list}>
-          { tasks.tasks.map((task, index) => (
+          { tasks.tasks.map((task) => (
             <Task 
-              key={index}
+              key={task.index}
               task={task}
-              index={index}
               removeTask={tasks.removeTask} 
               toggleTask={tasks.toggleTask}
             />

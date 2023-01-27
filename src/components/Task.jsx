@@ -3,7 +3,7 @@ import styles from '../styles/Task.module.css'
 import Tag from './Tag'
 import { TasksContext } from './TasksProvider'
 
-export default function Task({ task, index }) {
+export default function Task({ task }) {
 
   const tasks = useContext(TasksContext)
 
@@ -14,13 +14,13 @@ export default function Task({ task, index }) {
           <input 
             type="checkbox"
             checked={task.completed}
-            onClick={() => tasks.toggleTask(index)}
+            onClick={() => tasks.toggleTask(task.index)}
             readOnly
           />
         </div>
         <span 
           className={styles.taskName}
-          onClick={() => tasks.toggleTask(index)}>{task.name}</span>
+          onClick={() => tasks.toggleTask(task.index)}>{task.name}</span>
         <div className={styles.tags}>
           { task.tags && task.tags.map((tag, index) => (
             <Tag key={index} index={index} tag={tag} />
@@ -29,7 +29,7 @@ export default function Task({ task, index }) {
       </div>
       <button
         className={styles.remove}
-        onClick={() => tasks.removeTask(index)}>✕</button>
+        onClick={() => tasks.removeTask(task.index)}>✕</button>
     </li>
   )
 }

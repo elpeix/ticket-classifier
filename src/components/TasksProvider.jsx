@@ -89,7 +89,10 @@ export default function TasksProvider ({ children }) {
   }
 
   const getFilteredTasks = () => {
-    let filteredTasks = [ ...tasks ]
+    let filteredTasks = tasks.map((task, index) => {
+      return { ...task, index }
+    })
+
     if (filter.tag) {
       filteredTasks = tasks.filter(task => task.tags && task.tags.includes(filter.tag))
     }
@@ -102,7 +105,18 @@ export default function TasksProvider ({ children }) {
     if (filter.name) {
       filteredTasks = filteredTasks.filter(task => task.name.toLowerCase().includes(filter.name.toLowerCase()))
     }
-    return filteredTasks
+    return filteredTasks.map(task => {
+      const newTask = { ...task }
+      if (filter.name) {
+        const index = newTask.name.toLowerCase().indexOf(filter.name.toLowerCase())
+        newTask.name = [
+          newTask.name.substring(0, index),
+          <span className="highlight" key={index}>{newTask.name.substring(index, index + filter.name.length)}</span>,
+          newTask.name.substring(index + filter.name.length)
+        ]
+      }
+      return newTask
+    })
   }
 
   const cleanCompletedTasks = () => {
