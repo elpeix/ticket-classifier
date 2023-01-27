@@ -1,3 +1,13 @@
+.container {
+  background-color: var(--background-color);
+  padding: 1rem 0;
+  height: 5.6rem;
+  position:sticky;
+  top:0;
+  z-index: 1;
+}
+
+
 .taskInput {
   width: 100%;
   height: 100%;
@@ -6,9 +16,8 @@
   font-size: 1.5rem;
   font-family: inherit;
   color: inherit;
-  background-color: var(--background-color);
   display: flex;
-  padding: 1rem 0 1rem;
+  height: 100%;
 
   position:sticky;
   top:0;
@@ -36,12 +45,15 @@
   outline: none;
   font-size: 1.2rem;
   font-family: inherit;
+  font-variation-settings: 'wght' 400, 
+                           'wdth' 150,
+                           'slnt' var(--font-v-slnt);
   color: inherit;
   background-color: transparent;
   cursor: pointer;
   text-transform: uppercase;
   transition: border-color 0.25s, color 0.1s;
-  min-width: 5rem;
+  width: 5rem;
 }
 
 .button:hover,
@@ -52,4 +64,30 @@
   border-bottom-color: var(--color-primary);
   border-right-color: var(--color-primary);
   color: var(--color-primary-invert);
+}
+
+.error {
+  color: var(--color-error);
+  font-size: 1rem;
+  text-align: right;
+  margin-top: -2.4rem;
+  margin-right: 6rem;
+
+  font-variation-settings: 'wght' var(--font-weight-regular), 
+                           'wdth' var(--font-v-wdth-wide),
+                           'slnt' var(--font-v-italic);
+  opacity: 0;
+  animation: error 2s ease-in-out;
+}
+
+@keyframes error {
+  0% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }

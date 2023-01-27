@@ -7,8 +7,10 @@ export default function TaskInput() {
   const tasks = useContext(TasksContext)
   
   const [taskInput, setTaskInput] = useState('')
+  const [error, setError] = useState('')
 
   const handleChange = (e) => {
+    setError('')
     setTaskInput(e.target.value)
   }
 
@@ -17,6 +19,7 @@ export default function TaskInput() {
       handleClick()
     }
     if (e.key === 'Escape') {
+      setError('')
       setTaskInput('')
     }
   }
@@ -25,24 +28,34 @@ export default function TaskInput() {
     if (taskInput === '') {
       return
     }
-    tasks.addTask(taskInput)
+    try {
+      tasks.addTask(taskInput)
+      setError('')
+    } catch (e) {
+      setError(e.message)
+    }
     setTaskInput('')
   }
 
   return (
-    <div className={styles.taskInput}>
-      <input 
-        className={styles.input}
-        type="text"
-        placeholder="Add task" 
-        onChange={handleChange}
-        onKeyUp={handleKeyUp} 
-        value={taskInput} />
-      <button
-        className={styles.button} 
-        onClick={handleClick}>
-          Add
-      </button>
+    <div className={styles.container}>
+      <div className={styles.taskInput}>
+        <input 
+          className={styles.input}
+          type="text"
+          placeholder="Add task" 
+          onChange={handleChange}
+          onKeyUp={handleKeyUp} 
+          value={taskInput} />
+        <button
+          className={styles.button} 
+          onClick={handleClick}>
+            Add
+        </button>
+      </div>
+      { error && (
+        <div className={styles.error}>{error}</div>
+      )}
     </div>
   )
 }

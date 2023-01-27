@@ -33,3 +33,11 @@
 .list li:hover {
   background-color: var(--color-primary-opacity);
 }
+
+.empty {
+  width: 100%;
+  padding: 3rem 0.5rem;
+  text-align: center;
+  font-size: 1.4rem;
+  opacity: 0.5;
+}

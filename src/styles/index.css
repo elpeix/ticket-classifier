@@ -1,10 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,slnt,wdth,wght,GRAD,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC@8..144,-10,135,300,-34,369,35,854,-305,788,416,760&display=swap');
+
 :root {
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  line-height: 1.5rem;
-  font-weight: 400;
 
   color-scheme: light dark;
+
+  font-family: 'Roboto Flex', Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.2rem;
+  font-weight: 400;
+
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+
+  --font-v-opsz: 8;
+  --font-v-italic: -10;
+  --font-v-slnt: 0;
+  --font-v-wdth-normal: 120;
+  --font-v-wdth-wide: 140;
+
+  font-variation-settings: 'wght' var(--font-weight-light), 
+                           'wdth' var(--font-v-wdth-normal),
+                           'slnt' var(--font-v-slnt);
 
   --background-color: #231F20;
   --text-color: #efe6dd;
@@ -13,8 +30,8 @@
   background-color: var(--background-color);
 
   --color-primary: #7ebdc2;
-  --color-primary-hover: #7ebdc2;
-  --color-primary-active: #7ebdc2;
+  --color-primary-hover: #24a1aa;
+  --color-primary-active: #24a1aa;
   --color-primary-invert: #231F20;
   --color-primary-opacity: rgba(126, 189, 194, 0.1);
 
@@ -43,14 +60,17 @@
   --input-color-active: var(--color-primary-active);
   --input-bgcolor-active: var(--color-primary-opacity);
 
-  accent-color: var(--color-primary);
+  --color-error: #bb4430;
 
+  accent-color: var(--color-primary);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
+  --icon-valid: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(56, 142, 60)' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
 }
 
 * {
@@ -77,6 +97,7 @@ body {
   display: flex;
   flex-direction: column;
   place-items: center;
+  align-items: center;
   width: 100%;
   height: 100%;
 }
@@ -88,18 +109,28 @@ main {
 }
 
 h1 {
-  font-size: 1.8rem;
+  font-size: 2.2rem;
+  font-weight: var(--font-weight-bold);
   line-height: 1.1;
   padding: 1rem 0 0;
+
+  font-variation-settings: 'wght' var(--font-weight-regular), 
+                           'wdth' var(--font-v-wdth-wide),
+                           'slnt' var(--font-v-slnt);
 }
 
 button {
   border-radius: 0.4rem;
   border: 1px solid transparent;
   padding: 0.5rem 1rem;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 500;
   font-family: inherit;
+
+  font-variation-settings: 'wght' 450, 
+                           'wdth' var(--font-v-wdth-normal),
+                           'slnt' var(--font-v-slnt);
+
   background-color: var(--submit-button-color);
   color: var(--submit-button-color-invert);
   cursor: pointer;
@@ -129,6 +160,11 @@ input {
   font-size: 1.2rem;
   font-weight: 500;
   font-family: inherit;
+
+  font-variation-settings: 'wght' var(--font-weight-light)
+                           'wdth' var(--font-v-wdth-normal),
+                           'slnt' var(--font-v-slnt);
+
   background-color: var(--color-primary-invert);
   transition: border-color 0.25s, background-color 0.25s;
 }
@@ -138,19 +174,6 @@ input:focus-visible {
   background-color: var(--input-bgcolor-active);
 }
 
-input[type="checkbox"] {
-  border: none;
-  background-color: transparent;
-  padding: 0;
-  margin: 0;
-  width: 2rem;
-  height: 2rem;
-  cursor: pointer;
-}
-
-input[type="checkbox"]:checked {
-  background-color: var(--color-primary);
-}
 
 
 

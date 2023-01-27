@@ -1,7 +1,10 @@
 
 .tag {
   font-size: 0.8rem;
-  font-weight: 600;
+  font-weight: var(--font-weight-bold);
+  font-variation-settings: 'wght' 500, 
+                           'wdth' var(--font-v-wdth-normal),
+                           'slnt' var(--font-v-italic);
   padding: 0.3rem 1rem;
   border-radius: 0.3rem;
   margin-right: 0.5rem;

@@ -6,3 +6,8 @@
   padding: 0 0 1rem;
   gap: 0.5rem;
 }
+
+.active {
+  background-color: var(--color-primary-active);
+  color: var(--color-primary-invert);
+}

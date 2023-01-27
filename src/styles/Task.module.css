@@ -22,7 +22,43 @@
   text-overflow: ellipsis;
 }
 
+input[type="checkbox"] {
+  appearance: none;
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+}
 
+input[type="checkbox"]:focus,
+input[type="checkbox"]:focus-visible {
+  outline: none;
+}
+
+input[type="checkbox"]::after {
+  content: " ";
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.4rem;
+  border: 2px solid var(--color-primary);
+  background-color: transparent;
+  transition: background-color 0.01s;
+  font-size: 1.5rem;
+  margin: 0;
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked::after {
+  content: " ";
+  display: block;
+  text-align: center;
+  /*clip-path: polygon(17.79% 44.15%, 2.57% 61.64%, 39.19% 92.25%, 97.25% 25.53%, 79.69% 10.25%, 36.85% 59.48%);*/
+  clip-path: polygon(18.54% 51.4%, 3.32% 68.89%, 39.94% 99.5%, 98% 32.78%, 80.44% 17.5%, 37.6% 66.72%);
+  background-color: var(--color-primary-active);
+  opacity: 1;
+}
 
 .remove {
   border: none;

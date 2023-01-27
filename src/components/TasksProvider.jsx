@@ -6,7 +6,7 @@ export default function TasksProvider ({ children }) {
 
   const [tasks, setTasks] = useState([])
   const [filter, setFilter] = useState({
-    status: 'all',
+    status: '',
     tag: '',
     user: '',
     name: ''    
@@ -23,8 +23,9 @@ export default function TasksProvider ({ children }) {
 
   const addTask = (taskInput) => {
     if (taskInput === '') {
-      return
+      throw new Error('Task cannot be empty')
     }
+    
     // Get tags from taskInput
     let tags = taskInput.match(/#\w+/g)
     if (tags) {
@@ -38,7 +39,15 @@ export default function TasksProvider ({ children }) {
     }
     
     // Remove tags and user from taskInput
-    taskInput = taskInput.replace(/(#|@)\w+/g, '')
+    taskInput = taskInput.replace(/(#|@)\w+/g, '').trim()
+
+    if (taskInput === '') {
+      throw new Error('Task cannot be empty')
+    }
+
+    if (tasks.some(task => task.name === taskInput)) {
+      throw new Error('Task already exists')
+    }
 
     // TODO: Call classifier
 
@@ -68,7 +77,7 @@ export default function TasksProvider ({ children }) {
   const filterByStatus = (status) => {
     setFilter({
       ...filter,
-      status: filter.status === status ? '' : status
+      status: status
     })
   }
 
