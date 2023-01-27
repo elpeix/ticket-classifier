@@ -41,6 +41,7 @@
   cursor: pointer;
   text-transform: uppercase;
   transition: border-color 0.25s, color 0.1s;
+  min-width: 5rem;
 }
 
 .button:hover,

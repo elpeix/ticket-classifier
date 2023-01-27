@@ -24,7 +24,7 @@
   --color-secondary-invert: #efe6dd;
 
   --color-tertiary: #f3dfa2;
-  --color-tertiary-hover: #f3dfa2;
+  --color-tertiary-hover: #e7b82a;
   --color-tertiary-active: #e7b82a;
   --color-tertiary-invert: #231F20;
 
@@ -96,7 +96,7 @@ h1 {
 button {
   border-radius: 0.4rem;
   border: 1px solid transparent;
-  padding: 1rem 2rem;
+  padding: 0.5rem 1rem;
   font-size: 1.2rem;
   font-weight: 500;
   font-family: inherit;

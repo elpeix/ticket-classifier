@@ -5,7 +5,7 @@ export default function CleanerCompleted() {
 
   const tasks = useContext(TasksContext)
 
-  const showCleaner = tasks.tasks.length > 0 
+  const showCleaner = tasks.totals.completed > 0 
                    && tasks.tasks.some(task => task.completed)
 
   return (

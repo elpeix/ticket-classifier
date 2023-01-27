@@ -23,16 +23,6 @@
 }
 
 
-.tag {
-  font-size: 0.8rem;
-  font-weight: 500;
-  padding: 0.5rem 1rem;
-  border-radius: 0.4rem;
-  margin-right: 0.5rem;
-  background-color: var(--color-tertiary);
-  color: var(--color-tertiary-invert);
-}
-
 
 .remove {
   border: none;
