@@ -31,7 +31,7 @@ export default function TasksProvider ({ children }) {
     let tags = taskInput.match(/#\w+/g)
     let tag = ''
     if (tags) {
-      tags = tags.map(tag => tag.replace('#', ''))[0]
+      tags = tags.map(tag => tag.replace('#', ''))
       tag = tags[0]
     }
     
