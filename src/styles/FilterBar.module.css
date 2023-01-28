@@ -59,6 +59,7 @@
   padding: 0.5rem 0.5rem 0.5rem 2.2rem;
   width: 10rem;
   font-size: 1.02rem;
+  background-color: var(--color-primary-opacity);
   background-image: var(--icon-search);
   background-repeat: no-repeat;
   background-position: 0.4rem 0.3rem;

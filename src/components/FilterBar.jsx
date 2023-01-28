@@ -43,7 +43,7 @@ export default function FilterBar() {
       <div className={styles.filterByName}>
         <input
           type="text"
-          placeholder="  Filter by name"
+          placeholder="Filter by name"
           value={tasks.filter.name}
           onChange={e => tasks.filter.filterByName(e.target.value)}
           onKeyUp={e => e.key === 'Escape' && tasks.filter.filterByName('')}
