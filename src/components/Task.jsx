@@ -14,20 +14,16 @@ export default function Task({ task }) {
           <input 
             type="checkbox"
             checked={task.completed}
-            onClick={() => tasks.toggleTask(task.index)}
+            onClick={() => tasks.toggleTask(task.id)}
             readOnly
           />
         </div>
         <span className={styles.taskName}>{task.name}</span>
-        <div className={styles.tags}>
-          { task.tags && task.tags.map((tag, index) => (
-            <Tag key={index} index={index} tag={tag} />
-          ))}
-        </div>
+        <Tag tag={task.tag} />
       </div>
       <button
         className={styles.remove}
-        onClick={() => tasks.removeTask(task.index)}>✕</button>
+        onClick={() => tasks.removeTask(task.id)}>✕</button>
     </li>
   )
 }

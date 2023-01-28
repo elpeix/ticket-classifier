@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react'
+import { classify } from '../services/classifier'
 
 export const TasksContext = createContext()
 
@@ -28,14 +29,18 @@ export default function TasksProvider ({ children }) {
     
     // Get tags from taskInput
     let tags = taskInput.match(/#\w+/g)
+    let tag = ''
     if (tags) {
-      tags = tags.map(tag => tag.replace('#', ''))
+      tags = tags.map(tag => tag.replace('#', ''))[0]
+      tag = tags[0]
     }
     
-    // Get user from taskInput
-    let user = taskInput.match(/@\w+/g)
-    if (user) {
-      user = user.map(user => user.replace('@', ''))
+    // Get user from taskInput - TODO
+    let users = taskInput.match(/@\w+/g)
+    let user = ''
+    if (users) {
+      users = users.map(user => user.replace('@', ''))
+      user = user[0]
     }
     
     // Remove tags and user from taskInput
@@ -48,17 +53,88 @@ export default function TasksProvider ({ children }) {
     if (tasks.some(task => task.name === taskInput)) {
       throw new Error('Task already exists')
     }
-
-    // TODO: Call classifier
-
-    const newTasks = [...tasks]
-    saveTasks([...newTasks, {
+    const id = tasks.length
+    const newTask = {
+      id: id,
       name: taskInput,
       completed: false,
-      tags: tags,
-      user: user && user[0]
-    }])
+      tag: tag,
+      user: user
+    }
+
+    const newTasks = [...tasks]
+    saveTasks([...newTasks, newTask])
+
+    if (tag) {
+      return
+    }
+
+    setLoading(true)
+    getTag(taskInput)
+      .then(tag => {
+        if (tag) {
+          newTask.tag = tag
+          saveTasks([...newTasks, newTask])
+        }
+        setLoading(false)
+      })
+      .catch(err => {
+        console.log(err)
+        setLoading(false)
+      })
   }
+
+  const getTag = async (taskInput) => {
+    let examples = []
+    // Get examples from current tasks
+    tasks.forEach(task => {
+      task.tag && examples.push({ 
+        text: task.name, 
+        label: task.tag
+      })
+    })
+    // Get more examples from archived tasks
+    const archivedTasks = getArchivedTasks()
+    archivedTasks.forEach(task => {
+      task.tag && examples.push({
+        text: task.name,
+        label: task.tag
+      })
+    })
+
+    // Check if there are enough examples and at least 2 labels from each tag
+    const labels = {}
+    examples.forEach(example => {
+      if (labels[example.label]) {
+        labels[example.label]++
+      } else {
+        labels[example.label] = 1
+      }
+    })
+    examples = examples.filter(example => {
+      return labels[example.label] > 1
+    })
+
+    if (examples.length <= 3) {
+      return ''
+    }
+
+    const data = await classify(taskInput, examples)
+    if (data && typeof data === 'string') {
+      return data
+    }
+    return ''
+  }
+
+  const updateTask = (id, updatedTask) => {
+    const newTasks = [...tasks]
+    const task = newTasks.find(task => task.id === id)
+    if (!task) {
+      throw new Error('Task not found')
+    }
+    Object.assign(task, updatedTask)
+    saveTasks(newTasks)
+  }    
 
   const filterByTag = (tag) => {
     setFilter({
@@ -92,9 +168,8 @@ export default function TasksProvider ({ children }) {
     let filteredTasks = tasks.map((task, index) => {
       return { ...task, index }
     })
-
     if (filter.tag) {
-      filteredTasks = tasks.filter(task => task.tags && task.tags.includes(filter.tag))
+      filteredTasks = tasks.filter(task => task.tag === filter.tag)
     }
     if (filter.user) {
       filteredTasks = filteredTasks.filter(task => task.user === filter.user)
@@ -120,21 +195,33 @@ export default function TasksProvider ({ children }) {
   }
 
   const cleanCompletedTasks = () => {
+    let archivedTasks = getArchivedTasks()
+    archivedTasks = archivedTasks.concat(tasks.filter(task => task.completed && task.tag))
+    localStorage.setItem('archivedTasks', JSON.stringify(archivedTasks))
     saveTasks(tasks.filter(task => !task.completed))
   }
 
-  const removeTask = (index) => {
-    saveTasks(tasks.filter((_, i) => index !== i))
+  const getArchivedTasks = () => {
+    const storedArchivedTasks = localStorage.getItem('archivedTasks')
+    if (storedArchivedTasks) {
+      return JSON.parse(storedArchivedTasks)
+    }
+    return []
   }
 
-  const toggleTask = (index) => {
+  const removeTask = (id) => {
+    saveTasks(tasks.filter((task) => task.id !== id))
+  }
+
+  const toggleTask = (id) => {
     const newTasks = [...tasks]
+    const index = newTasks.findIndex(task => task.id === id)
     newTasks[index].completed = !newTasks[index].completed
     saveTasks(newTasks)
   }
 
-  const getTask = (index) => {
-    return tasks[index]
+  const getTask = (id) => {
+    return tasks.find(task => task.id === id)
   }
 
   const saveTasks = (newTasks) => {
@@ -160,6 +247,7 @@ export default function TasksProvider ({ children }) {
       pending: tasks.filter(task => !task.completed).length
     },
     addTask,
+    updateTask,
     getTask,
     cleanCompletedTasks,
     removeTask,

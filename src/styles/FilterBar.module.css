@@ -16,7 +16,8 @@
 
 .filterByStatus > button {
   border-radius: 0;
-  border: 1px solid var(--color-primary-active);
+  border-top: 1px solid var(--color-primary-active);
+  border-bottom: 1px solid var(--color-primary-active);
   background-color: var(--color-primary-opacity);
   color: var(--color-primary);
 }
@@ -29,10 +30,12 @@
 }
 
 .filterByStatus > button:first-child {
+  border: 1px solid var(--color-primary-active);
   border-radius: 0.5rem 0 0 0.5rem;
 }
 
 .filterByStatus > button:last-child {
+  border: 1px solid var(--color-primary-active);
   border-radius: 0 0.5rem 0.5rem 0;
 }
 
