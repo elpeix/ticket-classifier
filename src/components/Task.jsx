@@ -18,9 +18,7 @@ export default function Task({ task }) {
             readOnly
           />
         </div>
-        <span 
-          className={styles.taskName}
-          onClick={() => tasks.toggleTask(task.index)}>{task.name}</span>
+        <span className={styles.taskName}>{task.name}</span>
         <div className={styles.tags}>
           { task.tags && task.tags.map((tag, index) => (
             <Tag key={index} index={index} tag={tag} />

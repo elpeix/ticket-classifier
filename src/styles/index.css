@@ -29,8 +29,8 @@
   color: var(--text-color);
   background-color: var(--background-color);
 
-  --color-primary: #7ebdc2;
-  --color-primary-hover: #24a1aa;
+  --color-primary: rgb(126, 189, 194);
+  --color-primary-hover: rgb(36, 161, 170);
   --color-primary-active: #24a1aa;
   --color-primary-invert: #231F20;
   --color-primary-opacity: rgba(126, 189, 194, 0.1);
@@ -70,7 +70,7 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
-  --icon-valid: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(56, 142, 60)' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+  --icon-search: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' viewBox='0 0 24 24' stroke-width='2.4' stroke='rgb(126, 189, 194)' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z' /%3E%3C/svg%3E");
 }
 
 * {
@@ -98,6 +98,7 @@ body {
   flex-direction: column;
   place-items: center;
   align-items: center;
+  padding: 0 1rem;
   width: 100%;
   height: 100%;
 }
