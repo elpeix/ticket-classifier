@@ -1,8 +1,5 @@
 import React from 'react'
-import CleanerCompleted from './components/CleanerCompleted'
-import FilterBar from './components/FilterBar'
-import TaskInput from './components/TaskInput'
-import TaskList from './components/TaskList'
+import Container from './components/Container'
 import TasksProvider from './components/TasksProvider'
 
 function App() {
@@ -11,10 +8,7 @@ function App() {
     <TasksProvider>
       <main className="App">
         <h1>Todo List</h1>
-        <TaskInput />
-        <FilterBar />
-        <TaskList />
-        <CleanerCompleted />
+        <Container />
       </main>
     </TasksProvider>
   )

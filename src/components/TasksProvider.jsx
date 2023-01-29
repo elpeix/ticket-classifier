@@ -6,6 +6,8 @@ export const TasksContext = createContext()
 export default function TasksProvider ({ children }) {
 
   const [tasks, setTasks] = useState([])
+  const [sampleTasks, setSampleTasks] = useState([])
+  const [archivedTasks, setArchivedTasks] = useState([])
   const [filter, setFilter] = useState({
     status: '',
     tag: '',
@@ -18,6 +20,14 @@ export default function TasksProvider ({ children }) {
     const storedTasks = localStorage.getItem('tasks')
     if (storedTasks) {
       setTasks(JSON.parse(storedTasks))
+    }
+    const storedSampleTasks = localStorage.getItem('sampleTasks')
+    if (storedSampleTasks) {
+      setSampleTasks(JSON.parse(storedSampleTasks))
+    }
+    const storedArchivedTasks = localStorage.getItem('archivedTasks')
+    if (storedArchivedTasks) {
+      setArchivedTasks(JSON.parse(storedArchivedTasks))
     }
     setLoading(false)
   }, [])
@@ -85,7 +95,28 @@ export default function TasksProvider ({ children }) {
   }
 
   const getTag = async (taskInput) => {
+    const examples = getExamples()
+
+    if (examples.length <= 3) {
+      return ''
+    }
+    const data = await classify(taskInput, examples)
+    if (data && typeof data === 'string') {
+      return data
+    }
+    return ''
+  }
+
+  const getExamples = () => {
     let examples = []
+    // Get examples from sample tasks
+    sampleTasks.forEach(task => {
+      task.tag && examples.push({
+        text: task.name,
+        label: task.tag
+      })
+    })
+
     // Get examples from current tasks
     tasks.forEach(task => {
       task.tag && examples.push({ 
@@ -94,7 +125,6 @@ export default function TasksProvider ({ children }) {
       })
     })
     // Get more examples from archived tasks
-    const archivedTasks = getArchivedTasks()
     archivedTasks.forEach(task => {
       task.tag && examples.push({
         text: task.name,
@@ -111,19 +141,16 @@ export default function TasksProvider ({ children }) {
         labels[example.label] = 1
       }
     })
+
     examples = examples.filter(example => {
       return labels[example.label] > 1
     })
 
-    if (examples.length <= 3) {
-      return ''
-    }
+    return examples
+  }
 
-    const data = await classify(taskInput, examples)
-    if (data && typeof data === 'string') {
-      return data
-    }
-    return ''
+  const examplesIsEmpty = () => {
+    return !getExamples().length
   }
 
   const updateTask = (id, updatedTask) => {
@@ -195,18 +222,15 @@ export default function TasksProvider ({ children }) {
   }
 
   const cleanCompletedTasks = () => {
-    let archivedTasks = getArchivedTasks()
-    archivedTasks = archivedTasks.concat(tasks.filter(task => task.completed && task.tag))
-    localStorage.setItem('archivedTasks', JSON.stringify(archivedTasks))
+    const newArchivedTasks = archivedTasks.concat(tasks.filter(task => task.completed && task.tag))
+    setArchivedTasks(newArchivedTasks)
+    localStorage.setItem('archivedTasks', JSON.stringify(newArchivedTasks))
     saveTasks(tasks.filter(task => !task.completed))
   }
 
-  const getArchivedTasks = () => {
-    const storedArchivedTasks = localStorage.getItem('archivedTasks')
-    if (storedArchivedTasks) {
-      return JSON.parse(storedArchivedTasks)
-    }
-    return []
+  const saveSampleTasks = (newSampleTasks) => {
+    setSampleTasks(newSampleTasks)
+    localStorage.setItem('sampleTasks', JSON.stringify(newSampleTasks))
   }
 
   const removeTask = (id) => {
@@ -250,6 +274,8 @@ export default function TasksProvider ({ children }) {
     updateTask,
     getTask,
     cleanCompletedTasks,
+    saveSampleTasks,
+    examplesIsEmpty,
     removeTask,
     toggleTask,
     loading
