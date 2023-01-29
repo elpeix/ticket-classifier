@@ -31,7 +31,7 @@ export async function classify(input, examples) {
   })
   const json = await response.json()
   const classification = json.classifications[0]
-  if (classification.confidence < 0.5) {
+  if (classification.confidence < 0.4) {
     throw new Error('Confidence too low. Please provide more examples.')
   }
   return classification.prediction

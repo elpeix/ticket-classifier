@@ -1,9 +1,4 @@
-// import config from '../config.json'
-const config = {
-  'token': 'A3AGpvdVMJUTvIXYeLLUYgZxp0KqFoc1Dv5Gix0g'
-}
-
-
+import config from '../config.json'
 
 const GENERATE_URL = 'https://api.cohere.ai/generate'
 
@@ -67,12 +62,12 @@ With topic: ${topic}`
   }
   const tasks = rawTasks
     .map(task => {
-      let [tag, taskName] = task.split(': ')
-      if (!tag || !taskName) {
+      let [tag, name] = task.split(': ')
+      if (!tag || !name) {
         return null
       }
       tag = tag.trim()
-      taskName = taskName.trim()
+      name = name.trim()
       if (tag.split(' ').length > 1) {
         tag = tag.split(' ')[1]
         tag = tag.trim()
@@ -80,7 +75,7 @@ With topic: ${topic}`
       if (tag === 'tags') {
         return null
       }
-      return { tag, taskName }
+      return { tag, name }
     })
     .filter(task => task != null)
   if (tasks.length == 0) {

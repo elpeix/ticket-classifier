@@ -15,7 +15,7 @@
   padding: 0 0 0 1rem;
 }
 
-.taskName{
+.name{
   width: 100%;
 }
 
@@ -61,27 +61,4 @@ input[type="checkbox"]:checked::after {
   background-color: var(--color-primary-active);
   box-shadow: none;
   opacity: 1;
-}
-
-.remove {
-  border: none;
-  outline: none;
-  font-size: 1.4rem;
-  font-family: inherit;
-  color: inherit;
-  background-color: transparent;
-  cursor: pointer;
-  margin: 0 .5rem;
-}
-
-.remove:hover {
-  background-color: var(--color-secondary);
-  color: var(--color-secondary-invert);
-}
-
-.remove:focus,
-.remove:focus-visible {
-  outline: none;
-  background-color: var(--color-secondary);
-  color: var(--color-secondary-invert);
 }

@@ -5,6 +5,7 @@ export const TasksContext = createContext()
 
 export default function TasksProvider ({ children }) {
 
+  const [topic, setTopic] = useState('')
   const [tasks, setTasks] = useState([])
   const [sampleTasks, setSampleTasks] = useState([])
   const [archivedTasks, setArchivedTasks] = useState([])
@@ -17,6 +18,10 @@ export default function TasksProvider ({ children }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    const storedTopic = localStorage.getItem('topic')
+    if (storedTopic) {
+      setTopic(storedTopic)
+    }
     const storedTasks = localStorage.getItem('tasks')
     if (storedTasks) {
       setTasks(JSON.parse(storedTasks))
@@ -253,6 +258,11 @@ export default function TasksProvider ({ children }) {
     localStorage.setItem('tasks', JSON.stringify(newTasks))
   }
 
+  const saveTopic = (topic) => {
+    setTopic(topic)
+    localStorage.setItem('topic', topic)
+  }
+
   const elements = {
     tasks : getFilteredTasks(),
     totalTasks: tasks.length,
@@ -274,7 +284,10 @@ export default function TasksProvider ({ children }) {
     updateTask,
     getTask,
     cleanCompletedTasks,
+    sampleTasks,
     saveSampleTasks,
+    topic,
+    saveTopic,
     examplesIsEmpty,
     removeTask,
     toggleTask,

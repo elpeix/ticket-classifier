@@ -18,11 +18,11 @@ export default function Task({ task }) {
             readOnly
           />
         </div>
-        <span className={styles.taskName}>{task.name}</span>
+        <span className={styles.name}>{task.name}</span>
         <Tag tag={task.tag} />
       </div>
       <button
-        className={styles.remove}
+        className='remove'
         onClick={() => tasks.removeTask(task.id)}>✕</button>
     </li>
   )
