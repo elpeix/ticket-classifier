@@ -5,17 +5,24 @@ import FilterBar from './FilterBar'
 import TaskInput from './TaskInput'
 import TaskList from './TaskList'
 import { TasksContext } from './TasksProvider'
+import styles from '../styles/Container.module.css'
 
 export default function Container () {
 
   const tasks = useContext(TasksContext)
-  const examplesIsEmpty = tasks.examplesIsEmpty()
+  const showConfiguration = tasks.examplesAreEmpty() || tasks.configurationMode 
 
   return (
     <>
-      { examplesIsEmpty && <ExampleGenerator />}
-      { !examplesIsEmpty && (
+      { showConfiguration  && <ExampleGenerator />}
+      { !showConfiguration && (
         <>
+          <div className={styles.topic}>
+            <h2>{tasks.topic}</h2>
+            <button className='simpleButton' onClick={() => tasks.setConfigurationMode(true)}>
+              Configure
+            </button>
+          </div>
           <TaskInput />
           <FilterBar />
           <TaskList />

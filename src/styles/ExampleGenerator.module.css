@@ -1,7 +1,6 @@
 input.topic{
   padding: 1rem;
   font-size: 1.4em;
-  margin-bottom: 1rem;
   width: 100%;
 }
 
@@ -14,7 +13,7 @@ input.topic.error {
 }
 
 ul.examplesList {
-  margin: 2rem 0;
+  margin: 1rem 0;
 }
 
 ul.examplesList li {

@@ -13,6 +13,8 @@ export default function ExampleGenerator() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
+  const canCancel = !tasks.examplesAreEmpty()
+
   const handleTopic = (e) => {
     setTopic(e.target.value)
     setTopicError(false)
@@ -129,6 +131,15 @@ export default function ExampleGenerator() {
         <button onClick={save} className={styles.save}>
           Save
         </button>
+
+        {canCancel && (
+          <button 
+            onClick={() => tasks.setConfigurationMode(false)}
+            className='simpleButton'
+          >
+            Cancel
+          </button>
+        )}
       </section>
     </div>
   )

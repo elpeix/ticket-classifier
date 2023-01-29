@@ -9,6 +9,7 @@ export default function TasksProvider ({ children }) {
   const [tasks, setTasks] = useState([])
   const [sampleTasks, setSampleTasks] = useState([])
   const [archivedTasks, setArchivedTasks] = useState([])
+  const [configurationMode, setConfigurationMode] = useState(false)
   const [filter, setFilter] = useState({
     status: '',
     tag: '',
@@ -154,7 +155,7 @@ export default function TasksProvider ({ children }) {
     return examples
   }
 
-  const examplesIsEmpty = () => {
+  const examplesAreEmpty = () => {
     return !getExamples().length
   }
 
@@ -260,6 +261,7 @@ export default function TasksProvider ({ children }) {
 
   const saveTopic = (topic) => {
     setTopic(topic)
+    setConfigurationMode(false)
     localStorage.setItem('topic', topic)
   }
 
@@ -288,10 +290,12 @@ export default function TasksProvider ({ children }) {
     saveSampleTasks,
     topic,
     saveTopic,
-    examplesIsEmpty,
+    examplesAreEmpty,
     removeTask,
     toggleTask,
-    loading
+    loading,
+    configurationMode,
+    setConfigurationMode,
   }
   
   return (

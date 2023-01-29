@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 import { TasksContext } from './TasksProvider'
-import styles from '../styles/CleanerCompleted.module.css'
 
 export default function CleanerCompleted() {
 
@@ -12,7 +11,7 @@ export default function CleanerCompleted() {
   return (
     <>
       { showCleaner && (
-        <button className={styles.cleanerButton} onClick={tasks.cleanCompletedTasks}>
+        <button className='simpleButton' onClick={tasks.cleanCompletedTasks}>
           Clean completed tasks
         </button>
       )}
