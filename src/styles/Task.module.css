@@ -17,9 +17,6 @@
 
 .taskName{
   width: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 input[type="checkbox"] {
@@ -61,7 +58,6 @@ input[type="checkbox"]:checked::after {
   display: block;
   text-align: center;
   clip-path: polygon(17.79% 44.15%, 2.57% 61.64%, 39.19% 92.25%, 97.25% 25.53%, 79.69% 10.25%, 36.85% 59.48%);
-  /*clip-path: polygon(18.54% 51.4%, 3.32% 68.89%, 39.94% 99.5%, 98% 32.78%, 80.44% 17.5%, 37.6% 66.72%);*/
   background-color: var(--color-primary-active);
   box-shadow: none;
   opacity: 1;
