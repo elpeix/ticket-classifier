@@ -85,7 +85,7 @@ export default function Configuration() {
   return (
     <div>
       <h2>Configuration</h2>
-      <section>
+      <section className={styles.section}>
         <label>
           <h3>Cohere Api Key</h3>
           <p>
@@ -107,7 +107,7 @@ export default function Configuration() {
           />
         </label>
       </section>
-      <section>
+      <section className={styles.section}>
         <label>
           <h3>Topic</h3>
           <p>Define topic of your todo list.</p>
@@ -120,11 +120,9 @@ export default function Configuration() {
           />
         </label>
       </section>
-      <section className={styles.examples}>
+      <section className={`${styles.examples} ${styles.section}`}>
         <h3>Examples</h3>
-        <p>
-          You must provide at least two examples for each tag.
-        </p>
+        <p>You must provide at least two examples for each tag.</p>
 
         <div>
           <button onClick={generateExamples} disabled={loading} className={styles.generateExample}>
@@ -159,7 +157,12 @@ export default function Configuration() {
                   setExamples(newExamples)
                 }}
               />
-              <button className='remove'  disabled={loading} onClick={() => removeExample(index)}>✕</button>
+              <button 
+                className={`remove ${styles.remove}`}
+                disabled={loading}
+                onClick={() => removeExample(index)}>
+                  ✕
+              </button>
             </li>
           ))}
         </ul>
@@ -168,10 +171,8 @@ export default function Configuration() {
           Add example manually
         </button>
       </section>
-      <section>
-        <button onClick={save} className={styles.save}>
-          Save
-        </button>
+      <section className={styles.section}>
+        <button onClick={save} className={styles.save}>Save</button>
 
         {canCancel && (
           <button 

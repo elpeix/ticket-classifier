@@ -19,7 +19,9 @@ export default function Container () {
         <>
           <div className={styles.topic}>
             <h2>{tasks.topic}</h2>
-            <button className='simpleButton' onClick={() => tasks.setConfigurationMode(true)}>
+            <button 
+              className={`simpleButton ${styles.configureButton}`} 
+              onClick={() => tasks.setConfigurationMode(true)}>
               Configure
             </button>
           </div>

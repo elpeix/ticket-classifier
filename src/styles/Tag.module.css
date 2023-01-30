@@ -21,3 +21,11 @@
 .tag.active:hover {
   background-color: var(--color-tertiary);
 }
+
+@media screen and (max-width: 768px) {
+  .tag {
+    font-size: 0.8rem;
+    padding: 0.2rem 0.5rem;
+    margin-right: 0;
+  }
+}

@@ -214,6 +214,7 @@ ul {
   background-color: transparent;
   cursor: pointer;
   margin: 0 .5rem;
+  max-width: 3rem;
 }
 
 .remove:hover {
@@ -279,5 +280,22 @@ ul {
   }
   .simpleButton {
     color: var(--color-primary-active);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  :root {
+    font-size: 14px;
+  }
+  #root {
+    padding: 0 0.5rem;
+  }
+  h1 {
+    margin: 0.5rem 0;
+    padding: 0.5rem 0;
+  }
+  h2 {
+    margin: 0.5rem 0;
+    padding: 0.5rem 0;
   }
 }
