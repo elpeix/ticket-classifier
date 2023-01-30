@@ -70,5 +70,6 @@ input[type="checkbox"]:checked::after {
   }
   .checkbox {
     padding: 0 0 0 0.5rem;
+    width: 2.6rem;
   }
 }
