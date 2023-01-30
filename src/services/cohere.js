@@ -1,5 +1,3 @@
-import config from '../config.json'
-
 const CLASSIFY_URL = 'https://api.cohere.ai/classify'
 const GENERATE_URL = 'https://api.cohere.ai/generate'
 const EMBED_URL = 'https://api.cohere.ai/embed'
@@ -99,9 +97,6 @@ With topic: ${topic}`
 export async function embed({token, texts}) {
   token = getToken(token)
 
-  if (!config.token) {
-    throw new Error('No token found. Please set the COHERE_TOKEN.')
-  }
   if (!texts) {
     throw new Error('No texts found. Please provide texts.')
   }
@@ -116,7 +111,11 @@ export async function embed({token, texts}) {
 
 function getToken(token) {
   if (!token) {
-    token = config.token
+    // eslint-disable-next-line no-undef
+    const VITE_TOKEN = process.env.VITE_TOKEN
+    if (VITE_TOKEN) {
+      token = VITE_TOKEN
+    }
     if (!token) {
       throw new Error('No token found. Please set the COHERE_TOKEN.')
     }
