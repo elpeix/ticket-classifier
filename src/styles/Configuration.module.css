@@ -1,3 +1,12 @@
+section {
+  margin-bottom: 2rem;
+}
+
+input.apiKey {
+  padding: 0.5rem 1rem;
+  width: 100%;
+}
+
 input.topic{
   padding: 1rem;
   font-size: 1.4em;
@@ -6,10 +15,6 @@ input.topic{
 
 input.topic.error {
   border-color: var(--color-secondary);
-}
-
-.examples {
-  margin: 2rem 0;
 }
 
 ul.examplesList {
@@ -30,7 +35,14 @@ ul.examplesList li {
 }
 
 .tag {
-  border-color: var(--color-tertiary)
+  border-color: var(--color-tertiary);
+  transition: all 0.2s ease-in-out;
+}
+.tag:focus,
+.tag:focus-visible {
+  outline: none;
+  border-color: var(--color-tertiary-active);
+  background-color: var(--color-tertiary-opacity);
 }
 
 button.addExample,
@@ -50,9 +62,29 @@ button.generateExample:focus-visible,
 button.generateExample:active {
   background-color: var(--color-tertiary-active);
 }
+button.addExample:disabled,
 button.generateExample:disabled {
-  background-color: var(--color-tertiary-invert);
+  background-color: transparent;
   color: var(--color-tertiary);
+}
+
+.loading::before {
+  content: "";
+  display: inline-block;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  margin-left: -0.5rem;
+  margin-right: 0.5rem;
+  border: 2px solid var(--color-tertiary);
+  border-top-color: transparent;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .save {
@@ -72,5 +104,18 @@ button.generateExample:disabled {
   }
   ul.examplesList li button {
     background-color: var(--color-secondary);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .loading::before {
+    border-color: var(--color-disabled);
+    border-top-color: transparent;
+  }
+  button.addExample:disabled,
+  button.generateExample:disabled {
+    background-color: transparent;
+    color: var(--color-disabled);
+
   }
 }

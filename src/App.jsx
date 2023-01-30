@@ -1,17 +1,23 @@
-import React from 'react'
+import React, { createContext } from 'react'
 import Container from './components/Container'
 import TasksProvider from './components/TasksProvider'
+import useToken from './hooks/useToken'
 
-function App() {
+
+export const AppContext = createContext()
+
+export default function App() {
+
+  const [token, setToken] = useToken()
 
   return (
-    <TasksProvider>
+    <AppContext.Provider value={{ token, setToken }}>
       <main className="App">
         <h1>Todo List</h1>
-        <Container />
+        <TasksProvider token={token}>
+          <Container />
+        </TasksProvider>
       </main>
-    </TasksProvider>
+    </AppContext.Provider>
   )
 }
-
-export default App

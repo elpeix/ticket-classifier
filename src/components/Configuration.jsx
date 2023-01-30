@@ -1,11 +1,23 @@
-import React, { useContext, useState } from 'react'
-import { generate } from '../services/generate'
-import styles from '../styles/ExampleGenerator.module.css'
+import React, { useContext, useEffect, useState } from 'react'
+import { AppContext } from '../App'
+import useDebounce from '../hooks/useDebounce'
+import { generate } from '../services/cohere'
+import styles from '../styles/Configuration.module.css'
 import { TasksContext } from './TasksProvider'
 
-export default function ExampleGenerator() {
+export default function Configuration() {
 
+  const { token, setToken } = useContext(AppContext)
   const tasks = useContext(TasksContext)
+  
+  const [tokenValue, setTokenValue] = useState(token)
+  const debouncedValue = useDebounce(tokenValue, 500)
+
+  useEffect(() => {
+    if (debouncedValue !== '' && debouncedValue !== token) {
+      setToken(debouncedValue)
+    }
+  }, [debouncedValue, setToken, token])
 
   const [topic, setTopic] = useState(tasks.topic)
   const [topicError, setTopicError] = useState(false)
@@ -20,6 +32,10 @@ export default function ExampleGenerator() {
     setTopicError(false)
   }
 
+  const handleToken = (e) => {
+    setTokenValue(e.target.value)
+  }
+
   const generateExamples = async () => {
     if (topic === '') {
       setTopicError(true)
@@ -27,7 +43,7 @@ export default function ExampleGenerator() {
     }
     setLoading(true)
     try {
-      const generatedExamples = await generate(topic, [])
+      const generatedExamples = await generate({ token, topic, tags: [] })
       setExamples(examples.concat(generatedExamples))
       setError('')
     } catch (error) {
@@ -51,6 +67,9 @@ export default function ExampleGenerator() {
   }
 
   const save = () => {
+    if (tokenValue !== '') {
+      setToken(tokenValue)
+    }
     if (topic === '') {
       setTopicError(true)
       return
@@ -66,10 +85,32 @@ export default function ExampleGenerator() {
   return (
     <div>
       <h2>Configuration</h2>
-      <p>Define topic of your todo list and generate examples.</p>
+      <section>
+        <label>
+          <h3>Cohere Api Key</h3>
+          <p>
+            We provide a free api key for you to try out our service but it is limited to 100 requests per minute.
+          </p>
+          <p>
+            Or you can get your own api key at
+            {' '}
+            <a href='https://cohere.ai' target='_blank' rel='noopener noreferrer'>
+              Cohere.ai
+            </a>.
+          </p>
+          <input
+            type='text'
+            className={styles.apiKey}
+            placeholder='Your api key'
+            value={tokenValue}
+            onChange={handleToken}
+          />
+        </label>
+      </section>
       <section>
         <label>
           <h3>Topic</h3>
+          <p>Define topic of your todo list.</p>
           <input 
             type='text'
             className={`${styles.topic} ${topicError ? styles.error : ''}`}
@@ -87,7 +128,7 @@ export default function ExampleGenerator() {
 
         <div>
           <button onClick={generateExamples} disabled={loading} className={styles.generateExample}>
-            {loading && <span>Loading...</span>}
+            {loading && <span className={styles.loading}>Loading...</span>}
             {!loading && <span>Generate examples automatically</span>}
           </button>
           {error && <span>{error}</span>}
@@ -118,12 +159,12 @@ export default function ExampleGenerator() {
                   setExamples(newExamples)
                 }}
               />
-              <button className='remove' onClick={() => removeExample(index)}>✕</button>
+              <button className='remove'  disabled={loading} onClick={() => removeExample(index)}>✕</button>
             </li>
           ))}
         </ul>
         or {' '}
-        <button onClick={addExample} className={styles.addExample}>
+        <button onClick={addExample} disabled={loading} className={styles.addExample}>
           Add example manually
         </button>
       </section>

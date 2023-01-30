@@ -1,10 +1,15 @@
-import React, { createContext, useEffect, useState } from 'react'
-import { classify } from '../services/classifier'
+import React, { createContext, useContext, useEffect, useState } from 'react'
+import { AppContext } from '../App'
+import { classify } from '../services/cohere'
 
 export const TasksContext = createContext()
 
+
+// TODO: Split function to avoid too many lines
+
 export default function TasksProvider ({ children }) {
 
+  const { token } = useContext(AppContext)
   const [topic, setTopic] = useState('')
   const [tasks, setTasks] = useState([])
   const [sampleTasks, setSampleTasks] = useState([])
@@ -106,7 +111,11 @@ export default function TasksProvider ({ children }) {
     if (examples.length <= 3) {
       return ''
     }
-    const data = await classify(taskInput, examples)
+    const data = await classify({
+      token: token,
+      input: taskInput,
+      examples: examples
+    })
     if (data && typeof data === 'string') {
       return data
     }
@@ -142,10 +151,12 @@ export default function TasksProvider ({ children }) {
     const labels = {}
     examples.forEach(example => {
       if (labels[example.label]) {
-        labels[example.label]++
-      } else {
-        labels[example.label] = 1
+        if (labels[example.label] < 4) {
+          labels[example.label]++
+        }
+        return
       }
+      labels[example.label] = 1
     })
 
     examples = examples.filter(example => {
@@ -295,7 +306,7 @@ export default function TasksProvider ({ children }) {
     toggleTask,
     loading,
     configurationMode,
-    setConfigurationMode,
+    setConfigurationMode
   }
   
   return (

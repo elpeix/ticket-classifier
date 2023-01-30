@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import CleanerCompleted from './CleanerCompleted'
-import ExampleGenerator from './ExampleGenerator'
+import Configuration from './Configuration'
 import FilterBar from './FilterBar'
 import TaskInput from './TaskInput'
 import TaskList from './TaskList'
@@ -14,7 +14,7 @@ export default function Container () {
 
   return (
     <>
-      { showConfiguration  && <ExampleGenerator />}
+      { showConfiguration  && <Configuration />}
       { !showConfiguration && (
         <>
           <div className={styles.topic}>

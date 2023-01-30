@@ -25,9 +25,6 @@
   --background-color: #231F20;
   --text-color: #efe6dd;
 
-  color: var(--text-color);
-  background-color: var(--background-color);
-
   --color-primary: rgb(126, 189, 194);
   --color-primary-hover: rgb(36, 161, 170);
   --color-primary-active: #24a1aa;
@@ -44,12 +41,12 @@
   --color-tertiary-active: #e7b82a;
   --color-tertiary-invert: #231F20;
 
-  --input-color: var(--color-primary);
-  --input-color-hover: var(--color-primary-hover);
-  --input-color-active: var(--color-primary-active);
-  --input-bgcolor-active: var(--color-primary-opacity);
-
   --color-error: #bb4430;
+  --color-disabled: #868686;
+
+
+  color: var(--text-color);
+  background-color: var(--background-color);
 
   accent-color: var(--color-primary);
 
@@ -67,12 +64,16 @@
 }
 
 a {
-  font-weight: 500;
-  color: var(--color-primary);
+  font-variation-settings: 'wght' var(--font-weight-regular), 
+                           'wdth' var(--font-v-wdth-normal),
+                           'slnt' var(--font-v-slnt);
+  color: var(--color-primary-active);
   text-decoration: inherit;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s ease-in-out, border-bottom 0.1s ease-in-out;
 }
 a:hover {
-  color: var(--color-primary-hover);
+  border-bottom: 1px solid var(--color-primary-hover);
 }
 
 body {
@@ -166,7 +167,7 @@ button:active {
   background-color: var(--color-primary-active);
 }
 button:disabled {
-  background-color: var(--color-primary-invert);
+  background-color: transparent;
   color: var(--color-primary);
   cursor: not-allowed;
 }
@@ -189,7 +190,7 @@ input {
 input:focus,
 input:focus-visible {
   outline: none;
-  background-color: var(--input-bgcolor-active);
+  background-color: var(--color-primary-opacity);
 }
 
 
@@ -227,6 +228,17 @@ ul {
   color: var(--color-secondary-invert);
 }
 
+.remove:active {
+  background-color: var(--color-secondary-active);
+  color: var(--color-secondary-invert);
+}
+
+.remove:disabled {
+  background-color: transparent;
+  color: var(--color-secondary);
+  cursor: not-allowed;
+}
+
 .simpleButton {
   background-color: transparent;
   border: none;
@@ -243,10 +255,29 @@ ul {
 @media (prefers-color-scheme: light) {
   :root {
     --background-color: #EFE6DD;
-    --text-color: #231F20;
+    --text-color: #313131;
+
+    --color-primary: rgb(73, 186, 194);
+    --color-primary-hover: rgb(41, 165, 173);
+    --color-primary-active: #0e96a0;
+    --color-primary-invert: #444444;
+    --color-primary-opacity: rgba(126, 189, 194, 0.1);
+  
+    --color-secondary: #bb4430;
+    --color-secondary-hover: #bb4430;
+    --color-secondary-active: #a03522;
+    --color-secondary-invert: #EFE6DD;
+  
+    --color-tertiary: #ecc756;
+    --color-tertiary-hover: #e2b11f;
+    --color-tertiary-active: #eeb814;
+    --color-tertiary-invert: #444444;
+    --color-tertiary-opacity: rgba(238, 184, 20, 0.1);
+  
+    --color-error: #bb4430;
+    --color-disabled: #868686;
   }
   .simpleButton {
     color: var(--color-primary-active);
   }
-  /* TODO: Add light theme colors */
 }
