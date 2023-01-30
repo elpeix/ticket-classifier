@@ -10,10 +10,11 @@ export default function Task({ task }) {
   return (
     <li className={`${task.completed ? styles.completed : ''}`}>
       <div className={`${styles.task}`}>
-        <div className={styles.checkbox}>
+        <div className={styles.checkboxDiv}>
           <input 
             type="checkbox"
             checked={task.completed}
+            className={styles.checkbox}
             onClick={() => tasks.toggleTask(task.id)}
             readOnly
           />
