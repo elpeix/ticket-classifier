@@ -18,6 +18,25 @@
   width: 100%;
 }
 
+span.name {
+  transition: background-color 0.1s;
+  border-radius: 0.4rem;
+  padding: 0.4rem 0.2rem;
+  user-select: none;
+}
+span.name:hover {
+  background-color: var(--color-primary-opacity);
+  cursor: text;
+}
+
+.tags {
+  display: flex;
+  gap: 0rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 input[type="checkbox"] {
   appearance: none;
   border: none;

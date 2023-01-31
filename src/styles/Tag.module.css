@@ -18,9 +18,6 @@
 .tag.active {
   background-color: var(--color-tertiary-active);
 }
-.tag.active:hover {
-  background-color: var(--color-tertiary);
-}
 
 @media screen and (max-width: 768px) {
   .tag {

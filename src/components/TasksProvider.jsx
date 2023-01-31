@@ -18,7 +18,6 @@ export default function TasksProvider ({ children }) {
   const [filter, setFilter] = useState({
     status: '',
     tag: '',
-    user: '',
     name: ''    
   })
   const [loading, setLoading] = useState(true)
@@ -55,15 +54,7 @@ export default function TasksProvider ({ children }) {
       tags = tags.map(tag => tag.replace('#', ''))
       tag = tags[0]
     }
-    
-    // Get user from taskInput - TODO
-    let users = taskInput.match(/@\w+/g)
-    let user = ''
-    if (users) {
-      users = users.map(user => user.replace('@', ''))
-      user = user[0]
-    }
-    
+
     // Remove tags and user from taskInput
     taskInput = taskInput.replace(/(#|@)\w+/g, '').trim()
 
@@ -79,8 +70,7 @@ export default function TasksProvider ({ children }) {
       id: id,
       name: taskInput,
       completed: false,
-      tag: tag,
-      user: user
+      tag: tag
     }
 
     const newTasks = [...tasks]
@@ -170,7 +160,21 @@ export default function TasksProvider ({ children }) {
     return !getExamples().length
   }
 
+  const getTags = () => {
+    const tags = {}
+    getExamples().forEach(example => tags[example.label] = true)
+    return Object.keys(tags)
+  }
+
   const updateTask = (id, updatedTask) => {
+    console.log('updatedTask', id)
+    if (Object.keys(updatedTask).length === 0 || Object.hasOwn(updateTask, 'name') && updatedTask.name === '') {
+      throw new Error('Task cannot be empty')
+    }
+    if (updatedTask.name && tasks.some(task => task.name === updatedTask.name && task.id !== id)) {
+      throw new Error('Task already exists')
+    }
+
     const newTasks = [...tasks]
     const task = newTasks.find(task => task.id === id)
     if (!task) {
@@ -184,13 +188,6 @@ export default function TasksProvider ({ children }) {
     setFilter({
       ...filter,
       tag: filter.tag === tag ? '' : tag
-    })
-  }
-
-  const filterByUser = (user) => {
-    setFilter({
-      ...filter,
-      user: filter.user === user ? '' : user
     })
   }
 
@@ -214,9 +211,6 @@ export default function TasksProvider ({ children }) {
     })
     if (filter.tag) {
       filteredTasks = tasks.filter(task => task.tag === filter.tag)
-    }
-    if (filter.user) {
-      filteredTasks = filteredTasks.filter(task => task.user === filter.user)
     }
     if (filter.status) {
       filteredTasks = filteredTasks.filter(task => task.completed === (filter.status === 'completed'))
@@ -261,10 +255,6 @@ export default function TasksProvider ({ children }) {
     saveTasks(newTasks)
   }
 
-  const getTask = (id) => {
-    return tasks.find(task => task.id === id)
-  }
-
   const saveTasks = (newTasks) => {
     setTasks(newTasks)
     localStorage.setItem('tasks', JSON.stringify(newTasks))
@@ -282,10 +272,8 @@ export default function TasksProvider ({ children }) {
     filter : {
       status: filter.status,
       tag: filter.tag,
-      user: filter.user,
       name: filter.name,
       filterByTag,
-      filterByUser,
       filterByStatus,
       filterByName
     },
@@ -295,15 +283,15 @@ export default function TasksProvider ({ children }) {
     },
     addTask,
     updateTask,
-    getTask,
+    toggleTask,
+    removeTask,
+    getTags,
     cleanCompletedTasks,
     sampleTasks,
     saveSampleTasks,
     topic,
     saveTopic,
     examplesAreEmpty,
-    removeTask,
-    toggleTask,
     loading,
     configurationMode,
     setConfigurationMode

@@ -46,7 +46,9 @@ export default function TaskInput() {
           placeholder="Add task" 
           onChange={handleChange}
           onKeyUp={handleKeyUp} 
-          value={taskInput} />
+          value={taskInput}
+          autoFocus
+        />
         <button
           className={styles.button} 
           onClick={handleClick}>
