@@ -83,12 +83,13 @@ export default function Task({ task }) {
           />
         )}
         {!editMode && (
-          <span 
+          <div 
             className={styles.name}
             onDoubleClick={() => setEditMode(true)}
           >
-            {task.name}
-          </span>
+            <span>{task.name}</span>
+            <span className={styles.editIcon} onClick={() => setEditMode(true)}></span>
+          </div>
         )}
         {editMode && (
           <div className={styles.tags}>

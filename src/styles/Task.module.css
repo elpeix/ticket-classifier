@@ -18,15 +18,40 @@
   width: 100%;
 }
 
-span.name {
+div.name {
   transition: background-color 0.1s;
   border-radius: 0.4rem;
   padding: 0.4rem 0.2rem;
   user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: start;
+  gap: 0.6rem;
 }
-span.name:hover {
+div.name:hover {
   background-color: var(--color-primary-opacity);
   cursor: text;
+}
+
+.editIcon {
+  display: none;
+  background-image: var(--icon-edit);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 1.4rem;
+  height: 1.5rem;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.1s ease-in-out;
+}
+div.name:hover .editIcon {
+  display: block;
+}
+
+div.name .editIcon:hover {
+  opacity: 1;
 }
 
 .tags {
