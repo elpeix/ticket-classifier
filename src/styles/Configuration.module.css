@@ -81,7 +81,7 @@ button.remove {
   margin-left: -0.5rem;
   margin-right: 0.5rem;
   border: 2px solid var(--color-tertiary);
-  border-top-color: transparent;
+  border-color: var(--color-tertiary) transparent var(--color-tertiary) transparent;
   animation: spin 1s linear infinite;
 }
 

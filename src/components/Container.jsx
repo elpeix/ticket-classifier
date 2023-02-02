@@ -14,8 +14,9 @@ export default function Container () {
 
   return (
     <>
-      { showConfiguration  && <Configuration />}
-      { !showConfiguration && (
+      { tasks.loading && <div className={styles.loading} /> }
+      { !tasks.loading && showConfiguration  && <Configuration />}
+      { !tasks.loading && !showConfiguration && (
         <>
           <div className={styles.topic}>
             <h2>{tasks.topic}</h2>
