@@ -3,6 +3,7 @@ import { AppContext } from '../App'
 import useDebounce from '../hooks/useDebounce'
 import { generate } from '../services/cohere'
 import styles from '../styles/Configuration.module.css'
+import ConfigurationArchivedTasks from './ConfigurationArchivedTasks'
 import { TasksContext } from './TasksProvider'
 
 export default function Configuration() {
@@ -171,6 +172,12 @@ export default function Configuration() {
           Add example manually
         </button>
       </section>
+
+      { tasks.archivedTasks.length > 0 && (
+        <section className={styles.section}>
+          <ConfigurationArchivedTasks />
+        </section>
+      )}
       <section className={styles.section}>
         <button onClick={save} className={styles.save}>Save</button>
 

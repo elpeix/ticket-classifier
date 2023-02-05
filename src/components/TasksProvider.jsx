@@ -243,6 +243,18 @@ export default function TasksProvider ({ children }) {
     saveTasks(tasks.filter(task => !task.completed))
   }
 
+  const cleanArchivedTasks = () => {
+    setArchivedTasks([])
+    localStorage.setItem('archivedTasks', JSON.stringify([]))
+  }
+
+  const restoreArchivedTasks = () => {
+    const newTasks = tasks.concat(archivedTasks)
+    saveTasks(newTasks)
+    setArchivedTasks([])
+    localStorage.setItem('archivedTasks', JSON.stringify([]))
+  }
+
   const saveSampleTasks = (newSampleTasks) => {
     setSampleTasks(newSampleTasks)
     localStorage.setItem('sampleTasks', JSON.stringify(newSampleTasks))
@@ -293,6 +305,9 @@ export default function TasksProvider ({ children }) {
     cleanCompletedTasks,
     sampleTasks,
     saveSampleTasks,
+    archivedTasks,
+    cleanArchivedTasks,
+    restoreArchivedTasks,
     topic,
     saveTopic,
     examplesAreEmpty,

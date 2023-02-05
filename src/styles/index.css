@@ -254,6 +254,15 @@ ul {
   color: var(--color-primary-invert);
 }
 
+.simpleButton.secondary {
+  color: var(--color-secondary);
+}
+
+.simpleButton.secondary:hover {
+  background-color: var(--color-secondary-active);
+  color: var(--color-secondary-invert);
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     --background-color: #EFE6DD;
