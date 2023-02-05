@@ -48,7 +48,7 @@ export default function TasksProvider ({ children }) {
     }
     
     // Get tags from taskInput
-    let tags = taskInput.match(/#\w+/g)
+    let tags = taskInput.match(/#[\w-]+/g)
     let tag = ''
     if (tags) {
       tags = tags.map(tag => tag.replace('#', ''))
@@ -56,7 +56,7 @@ export default function TasksProvider ({ children }) {
     }
 
     // Remove tags and user from taskInput
-    taskInput = taskInput.replace(/(#|@)\w+/g, '').trim()
+    taskInput = taskInput.replace(/(#|@)[\w-]+/g, '').trim()
 
     if (taskInput === '') {
       throw new Error('Task cannot be empty')
@@ -111,7 +111,7 @@ export default function TasksProvider ({ children }) {
     return ''
   }
 
-  const getExamples = () => {
+  const getAllExamples = () => {
     let examples = []
     // Get examples from sample tasks
     sampleTasks.forEach(task => {
@@ -128,6 +128,7 @@ export default function TasksProvider ({ children }) {
         label: task.tag
       })
     })
+
     // Get more examples from archived tasks
     archivedTasks.forEach(task => {
       task.tag && examples.push({
@@ -135,6 +136,11 @@ export default function TasksProvider ({ children }) {
         label: task.tag
       })
     })
+    return examples
+  }
+
+  const getExamples = () => {
+    let examples = getAllExamples()
 
     // Check if there are enough examples and at least 2 labels from each tag
     const labels = {}
@@ -161,7 +167,7 @@ export default function TasksProvider ({ children }) {
 
   const getTags = () => {
     const tags = {}
-    getExamples().forEach(example => tags[example.label] = true)
+    getAllExamples().forEach(example => tags[example.label] = true)
     return Object.keys(tags)
   }
 

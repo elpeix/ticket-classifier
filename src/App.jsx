@@ -22,7 +22,7 @@ export default function App() {
         <p>
           {new Date().getFullYear()} {' - '}
           <a href="https://github.com/elpeix" target="_blank" rel="noreferrer">
-            Francesc d&apos;Assís Requesens i Roca
+            elPeix
           </a>
         </p>
       </footer>

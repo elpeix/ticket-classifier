@@ -11,6 +11,7 @@
   background-color: var(--color-tertiary);
   color: var(--color-tertiary-invert);
   cursor: pointer;
+  white-space: nowrap;
 }
 .tag:hover {
   background-color: var(--color-tertiary-hover);
