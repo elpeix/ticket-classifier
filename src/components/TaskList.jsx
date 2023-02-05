@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styles from '../styles/TaskList.module.css'
 import Task from './Task'
 import { TasksContext } from './TasksProvider'
@@ -6,7 +6,13 @@ import { TasksContext } from './TasksProvider'
 export default function TaskList() {
 
   const tasks = useContext(TasksContext)
+  const [tags, setTags] = useState([])
+
   const empty = tasks.tasks.length === 0
+
+  useEffect(() => {
+    setTags(tasks.getTags())
+  }, [tasks])
   
   return ( 
     <>
@@ -19,8 +25,7 @@ export default function TaskList() {
             <Task 
               key={task.index}
               task={task}
-              removeTask={tasks.removeTask} 
-              toggleTask={tasks.toggleTask}
+              tags={tags}
             />
           ))}
         </ul>

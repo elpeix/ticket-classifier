@@ -5,13 +5,8 @@
 .task {
   display: flex;
   align-items: center;
-  justify-content: space-arround;
   gap: 1rem;
   width: 100%;
-}
-
-.checkboxDiv {
-  padding: 0 0 0 1rem;
 }
 
 .name{
@@ -56,7 +51,7 @@ div.name .editIcon:hover {
 
 .tags {
   display: flex;
-  gap: 0rem;
+  gap: 0.5rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -104,6 +99,15 @@ input[type="checkbox"]:checked::after {
   background-color: var(--color-primary-active);
   box-shadow: none;
   opacity: 1;
+}
+
+li.bigEdit {
+  align-items: start;
+}
+
+li.bigEdit .task {
+  flex-direction: column;
+  align-items: end;
 }
 
 @media screen and (max-width: 768px) {

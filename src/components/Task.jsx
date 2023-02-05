@@ -3,18 +3,18 @@ import styles from '../styles/Task.module.css'
 import Tag from './Tag'
 import { TasksContext } from './TasksProvider'
 
-export default function Task({ task }) {
+export default function Task({ task, tags }) {
 
   const tasks = useContext(TasksContext)
   const [name, setName] = useState('')
-  const [tags, setTags] = useState([])
   const [editMode, setEditMode] = useState(false)
   const [blurPrevent, setBlurPrevent] = useState(false)
 
   useEffect(() => {
     setName(task.name)
-    setTags(tasks.getTags())
   }, [task, tasks])
+
+  const bigEdit = tags.length > 3 ? styles.bigEdit : ''
 
   const handleTaskChange = (e) => {
     setName(e.target.value)
@@ -60,8 +60,8 @@ export default function Task({ task }) {
   }
 
   return (
-    <li className={`${task.completed ? styles.completed : ''}`}>
-      <div className={`${styles.task}`}>
+    <li className={`${task.completed && styles.completed} ${editMode && bigEdit}`}>
+      { !(editMode && bigEdit) && (
         <div className={styles.checkboxDiv}>
           <input 
             type="checkbox"
@@ -71,6 +71,8 @@ export default function Task({ task }) {
             readOnly
           />
         </div>
+      )}
+      <div className={`${styles.task}`}>
         {editMode && (
           <input
             type="text"

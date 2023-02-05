@@ -172,7 +172,6 @@ export default function TasksProvider ({ children }) {
   }
 
   const updateTask = (id, updatedTask) => {
-    console.log('updatedTask', id)
     if (Object.keys(updatedTask).length === 0 || Object.hasOwn(updateTask, 'name') && updatedTask.name === '') {
       throw new Error('Task cannot be empty')
     }
