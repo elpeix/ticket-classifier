@@ -65,7 +65,7 @@ export default function TasksProvider ({ children }) {
     if (tasks.some(task => task.name === taskInput)) {
       throw new Error('Task already exists')
     }
-    const id = tasks.length
+    const id = new Date().getTime()
     const newTask = {
       id: id,
       name: taskInput,
@@ -80,7 +80,6 @@ export default function TasksProvider ({ children }) {
       return
     }
 
-    setLoading(true)
     getTag(taskInput)
       .then(tag => {
         if (tag) {
