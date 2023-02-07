@@ -37,17 +37,27 @@ export default function TaskInput() {
     setTaskInput('')
   }
 
+  const handleFocus = () => {
+    tasks.selection.clean()
+    tasks.setEditing(true)
+  }
+
+  const handleBlur = () => {
+    tasks.setEditing(false)
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.taskInput}>
         <input 
           className={styles.input}
           type="text"
-          placeholder="Add task" 
+          placeholder="Add task"
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           onChange={handleChange}
           onKeyUp={handleKeyUp} 
           value={taskInput}
-          autoFocus
         />
         <button
           className={styles.button} 

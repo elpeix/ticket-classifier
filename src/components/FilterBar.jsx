@@ -46,6 +46,8 @@ export default function FilterBar() {
           placeholder="Filter by name"
           value={tasks.filter.name}
           onChange={e => tasks.filter.filterByName(e.target.value)}
+          onFocus={() => tasks.setEditing(true)}
+          onBlur={() => tasks.setEditing(false)}
           onKeyUp={e => e.key === 'Escape' && tasks.filter.filterByName('')}
         />
       </div>

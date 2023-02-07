@@ -60,7 +60,10 @@ export default function Task({ task, tags }) {
   }
 
   return (
-    <li className={`${task.completed && styles.completed} ${editMode && bigEdit}`}>
+    <li 
+      className={`${task.completed && styles.completed} ${editMode && bigEdit} ${task.selected && styles.selected}`}
+      onClick={() => tasks.selection.select(task.id)}
+    >
       { !(editMode && bigEdit) && (
         <div className={styles.checkboxDiv}>
           <input 

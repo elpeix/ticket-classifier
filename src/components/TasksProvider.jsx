@@ -21,6 +21,8 @@ export default function TasksProvider ({ children }) {
     name: ''    
   })
   const [loading, setLoading] = useState(true)
+  const [editMode, setEditMode] = useState(false)
+  const [selectedTask, setSelectedTask] = useState(null)
 
   useEffect(() => {
     const storedTopic = localStorage.getItem('topic')
@@ -223,7 +225,7 @@ export default function TasksProvider ({ children }) {
       filteredTasks = filteredTasks.filter(task => task.name.toLowerCase().includes(filter.name.toLowerCase()))
     }
     return filteredTasks.map(task => {
-      const newTask = { ...task }
+      const newTask = { ...task, selected: false }
       if (filter.name) {
         const index = newTask.name.toLowerCase().indexOf(filter.name.toLowerCase())
         newTask.name = [
@@ -231,6 +233,9 @@ export default function TasksProvider ({ children }) {
           <span className="highlight" key={index}>{newTask.name.substring(index, index + filter.name.length)}</span>,
           newTask.name.substring(index + filter.name.length)
         ]
+      }
+      if (selectedTask && selectedTask.id === task.id) {
+        newTask.selected = true
       }
       return newTask
     })
@@ -282,6 +287,36 @@ export default function TasksProvider ({ children }) {
     localStorage.setItem('topic', topic)
   }
 
+  const selectNext = () => {
+    const filteredTasks = getFilteredTasks()
+    if (!filteredTasks.length) {
+      return
+    }
+    const index = filteredTasks.findIndex(task => task.selected)
+    if (index === -1) {
+      selectTask(filteredTasks[0].id)
+    } else {
+      selectTask(filteredTasks[(index + 1) % filteredTasks.length].id)
+    }
+  }
+
+  const selectPrevious = () => {
+    const filteredTasks = getFilteredTasks()
+    if (!filteredTasks.length) {
+      return
+    }
+    const index = filteredTasks.findIndex(task => task.selected)
+    if (index === -1) {
+      selectTask(filteredTasks[0].id)
+    } else {
+      selectTask(filteredTasks[(index - 1 + filteredTasks.length) % filteredTasks.length].id)
+    }
+  }
+
+  const selectTask = (id) => {
+    setSelectedTask(tasks.find(task => task.id === id))
+  }
+
   const elements = {
     tasks : getFilteredTasks(),
     totalTasks: tasks.length,
@@ -296,6 +331,13 @@ export default function TasksProvider ({ children }) {
     totals: {
       completed: tasks.filter(task => task.completed).length,
       pending: tasks.filter(task => !task.completed).length
+    },
+    selection: {
+      clean: () => setSelectedTask(null),
+      next: selectNext,
+      previous: selectPrevious,
+      selected: selectedTask,
+      select: selectTask,
     },
     addTask,
     updateTask,
@@ -312,6 +354,11 @@ export default function TasksProvider ({ children }) {
     saveTopic,
     examplesAreEmpty,
     loading,
+    editing: editMode,
+    setEditing: (mode) => {
+      setSelectedTask(null)
+      setEditMode(mode)
+    },
     configurationMode,
     setConfigurationMode
   }
