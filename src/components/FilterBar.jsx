@@ -6,6 +6,13 @@ export default function FilterBar() {
 
   const tasks = useContext(TasksContext)
 
+  const handleKeyUp = (event) => {
+    if (event.key === 'Escape') {
+      tasks.filter.filterByName('')
+      tasks.setEditing(false)
+    }
+  }
+
   return (
     <div className={styles.bar}>
       <div className={styles.filterByStatus}>
@@ -48,7 +55,7 @@ export default function FilterBar() {
           onChange={e => tasks.filter.filterByName(e.target.value)}
           onFocus={() => tasks.setEditing(true)}
           onBlur={() => tasks.setEditing(false)}
-          onKeyUp={e => e.key === 'Escape' && tasks.filter.filterByName('')}
+          onKeyUp={handleKeyUp}
         />
       </div>
     </div>

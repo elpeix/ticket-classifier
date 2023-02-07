@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import styles from '../styles/Task.module.css'
 import Tag from './Tag'
 import { TasksContext } from './TasksProvider'
@@ -9,10 +9,21 @@ export default function Task({ task, tags }) {
   const [name, setName] = useState('')
   const [editMode, setEditMode] = useState(false)
   const [blurPrevent, setBlurPrevent] = useState(false)
+  const taskRef = useRef()
+  const taskEditRef = useRef()
 
   useEffect(() => {
     setName(task.name)
   }, [task, tasks])
+
+  useEffect(() => {
+    if (tasks.editing && !editMode && tasks.editing && tasks.editing.id === task.id) {
+      setEditMode(true)
+    }
+    if (editMode) {
+      taskEditRef.current.focus()
+    }
+  }, [editMode, task, tasks])
 
   const bigEdit = tags.length > 3 ? styles.bigEdit : ''
 
@@ -26,6 +37,8 @@ export default function Task({ task, tags }) {
     }
     if (e.key === 'Escape') {
       setName(task.name)
+      tasks.setEditing(false)
+      tasks.selection.select(task.id)
       setEditMode(false)
     }
   }
@@ -41,6 +54,8 @@ export default function Task({ task, tags }) {
         setName(task.name)
       }
     }
+    tasks.setEditing(false)
+    tasks.selection.select(task.id)
     setEditMode(false)
   }
 
@@ -61,6 +76,7 @@ export default function Task({ task, tags }) {
 
   return (
     <li 
+      ref={taskRef}
       className={`${task.completed && styles.completed} ${editMode && bigEdit} ${task.selected && styles.selected}`}
       onClick={() => tasks.selection.select(task.id)}
     >
@@ -78,12 +94,14 @@ export default function Task({ task, tags }) {
       <div className={`${styles.task}`}>
         {editMode && (
           <input
+            ref={taskEditRef}
             type="text"
             className={styles.name}
             value={name}
             onChange={handleTaskChange}
             onKeyUp={handleKeyUp}
             onBlur={handleBlur}
+            onFocus={() => tasks.setEditing(true)}
             autoFocus
           />
         )}

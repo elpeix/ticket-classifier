@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import CleanerCompleted from './CleanerCompleted'
 import Configuration from './Configuration'
 import FilterBar from './FilterBar'
@@ -11,14 +11,25 @@ export default function Container () {
 
   const tasks = useContext(TasksContext)
   const showConfiguration = tasks.examplesAreEmpty() || tasks.configurationMode 
+  const ref = useRef()
+
+  useEffect(() => {
+    if (!tasks.editing) {
+      ref.current.focus()
+    }
+  }, [tasks.editing])
 
   const handleKeyDown = (event) => {
     if (tasks.loading || tasks.editing) {
       return
     }
+    event.preventDefault()
     if (event.key === 'Escape') {
       tasks.setConfigurationMode(false)
       tasks.selection.clean()
+    }
+    if (tasks.configurationMode) {
+      return
     }
     if (event.altKey && event.key === ',') {
       tasks.setConfigurationMode(true)
@@ -32,16 +43,17 @@ export default function Container () {
     if (event.key === 'Delete') {
       tasks.removeTask(tasks.selection.selected.id)
     }
-    if (event.key === 'Enter') {
-      if (tasks.selection.selected) {
-        tasks.toggleTask(tasks.selection.selected.id)
-      }
+    if (event.key === 'Enter' && tasks.selection.selected) {
+      tasks.toggleTask(tasks.selection.selected.id)
+    }
+    if (event.key === ' ' && tasks.selection.selected) {
+      tasks.setEditing(tasks.selection.selected)
     }
     console.log(event.key)
   }
 
   return (
-    <div onKeyDown={handleKeyDown} tabIndex='0'>
+    <div ref={ref} onKeyDown={handleKeyDown} tabIndex='0'>
       { tasks.loading && <div className={styles.loading} /> }
       { !tasks.loading && showConfiguration  && <Configuration />}
       { !tasks.loading && !showConfiguration && (
