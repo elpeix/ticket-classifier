@@ -4,8 +4,18 @@
   align-items: center;
   justify-content: center;
   gap: 1rem;
+  padding: 1rem;
+}
+
+.form input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  max-width: 32rem;
 }
 
 .form button {
   width: 100%;
+  max-width: 32rem;
 }

@@ -17,25 +17,21 @@ export default function Login() {
   }
 
   return (
-    <div className="App">
-      <h1>Todo List</h1>
-      <p>You need to login to use this app</p>
-      <form className={styles.form} onSubmit={handleLogin}>
-        <input 
-          type="text" 
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-
-        <button type="submit">Login</button>
-      </form>
-    </div>
+    <form className={styles.form} onSubmit={handleLogin}>
+      <p>You need to login to use this app.</p>
+      <input 
+        type="text" 
+        placeholder="Username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <button type="submit">Login</button>
+    </form>
   )
 }

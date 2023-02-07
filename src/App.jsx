@@ -12,7 +12,18 @@ export default function App() {
 
   return (
     <LoginContext.Provider value={{ isLoggedIn, login, logout }}>
-      <TaskApp />
+      <main className="App">
+        <h1>Todo List</h1>
+        <TaskApp />
+      </main>
+      <footer>
+        <p>
+          {new Date().getFullYear()} {' - '}
+          <a href="https://github.com/elpeix" target="_blank" rel="noreferrer">
+            elPeix
+          </a>
+        </p>
+      </footer>
     </LoginContext.Provider>
   )
 

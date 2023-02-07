@@ -16,20 +16,9 @@ export default function TaskApp() {
     <>
       {login.isLoggedIn && (
         <AppContext.Provider value={{ token, setToken }}>
-          <main className="App">
-            <h1>Todo List</h1>
-            <TasksProvider token={token}>
-              <Container />
-            </TasksProvider>
-          </main>
-          <footer>
-            <p>
-              {new Date().getFullYear()} {' - '}
-              <a href="https://github.com/elpeix" target="_blank" rel="noreferrer">
-                elPeix
-              </a>
-            </p>
-          </footer>
+          <TasksProvider token={token}>
+            <Container />
+          </TasksProvider>
         </AppContext.Provider>
       )}
       {!login.isLoggedIn && (
