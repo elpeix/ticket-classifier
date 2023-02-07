@@ -1,31 +1,19 @@
 import React, { createContext } from 'react'
-import Container from './components/Container'
-import TasksProvider from './components/TasksProvider'
-import useToken from './hooks/useToken'
+import TaskApp from './components/TaskApp'
+import useLogin from './hooks/useLogin'
 
 
-export const AppContext = createContext()
+
+export const LoginContext = createContext()
 
 export default function App() {
 
-  const [token, setToken] = useToken()
+  const [isLoggedIn, login, logout] = useLogin()
 
   return (
-    <AppContext.Provider value={{ token, setToken }}>
-      <main className="App">
-        <h1>Todo List</h1>
-        <TasksProvider token={token}>
-          <Container />
-        </TasksProvider>
-      </main>
-      <footer>
-        <p>
-          {new Date().getFullYear()} {' - '}
-          <a href="https://github.com/elpeix" target="_blank" rel="noreferrer">
-            elPeix
-          </a>
-        </p>
-      </footer>
-    </AppContext.Provider>
+    <LoginContext.Provider value={{ isLoggedIn, login, logout }}>
+      <TaskApp />
+    </LoginContext.Provider>
   )
+
 }

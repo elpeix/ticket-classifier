@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import { AppContext } from '../App'
 import { classify } from '../services/cohere'
+import { AppContext } from './TaskApp'
 
 export const TasksContext = createContext()
 
