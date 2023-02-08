@@ -10,7 +10,7 @@ import styles from '../styles/Container.module.css'
 export default function Container () {
 
   const tasks = useContext(TasksContext)
-  const showConfiguration = tasks.examplesAreEmpty() || tasks.configurationMode 
+  const showConfiguration = tasks.configurationMode 
   const ref = useRef()
 
   useEffect(() => {
