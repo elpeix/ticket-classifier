@@ -1,7 +1,5 @@
 # TODO Classifier with Cohere
 
-**#cohere-hackathon**
-
 ## 🇬🇧
 
 Simple application to help you organize your tasks.
@@ -15,8 +13,6 @@ You can find more information about the [Cohere API](https://cohere.ai/docs).
 - Set a topic for your TO-DO list.
 - Generate examples automatically or add them manually.
 - Additionally, you can us your own apiKey, because this is a simple project to learn and fun an my apiKey may be is missed in a future.
-
-
 
 ---
 
