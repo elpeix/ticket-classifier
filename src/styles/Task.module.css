@@ -2,6 +2,10 @@
   background-color: var(--color-primary-opacity);
 }
 
+.selected {
+  background-color: var(--color-primary-opacity);
+}
+
 .task {
   display: flex;
   align-items: center;

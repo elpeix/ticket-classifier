@@ -1,3 +1,7 @@
+.tasksContainer:focus {
+  outline: none;
+}
+
 .loading {
   display: flex;
   align-items: center;
