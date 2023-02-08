@@ -91,6 +91,14 @@ button.remove {
   }
 }
 
+.manageExamples {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
 .save {
   margin: 2rem 0;
   width: 100%;

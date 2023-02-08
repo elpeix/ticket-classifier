@@ -75,10 +75,10 @@ export default function Configuration() {
       setTopicError(true)
       return
     }
-    if (examples.length < 2) {
-      setError('You must provide examples')
-      return
-    }
+    // if (examples.length < 2) {
+    //   setError('You must provide examples')
+    //   return
+    // }
     tasks.saveTopic(topic)
     tasks.saveSampleTasks(examples)
   }
@@ -123,7 +123,9 @@ export default function Configuration() {
       </section>
       <section className={`${styles.examples} ${styles.section}`}>
         <h3>Examples</h3>
-        <p>You must provide at least two examples for each tag.</p>
+        <p>
+          If you provide examples, Cohere will be able to classify your tasks better.
+        </p>
 
         <div>
           <button onClick={generateExamples} disabled={loading} className={styles.generateExample}>
@@ -167,10 +169,21 @@ export default function Configuration() {
             </li>
           ))}
         </ul>
-        or {' '}
-        <button onClick={addExample} disabled={loading} className={styles.addExample}>
-          Add example manually
-        </button>
+        <div className={styles.manageExamples}>
+          <div>
+            or {' '}
+            <button onClick={addExample} disabled={loading} className={styles.addExample}>
+              Add example manually
+            </button>
+          </div>
+          { examples.length > 0 && (
+            <div>
+              <button onClick={() => setExamples([])} disabled={loading} className='simpleButton'>
+                Clear examples
+              </button>
+            </div>
+          )}
+        </div>
       </section>
 
       { tasks.archivedTasks.length > 0 && (

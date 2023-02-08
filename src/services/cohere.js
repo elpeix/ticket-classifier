@@ -36,25 +36,50 @@ export async function generate({token, topic, tags}) {
     throw new Error('Tags must be an array.')
   }
 
-  let prompt = `With provided topic, generate, at leat, two tasks for each tag:
+  tags = ['feature', 'bug', 'hotfix', 'documentation']
+
+  let prompt = `Using the topic given, create three or more tasks for EACH different tag.
+The tasks should be related to the topic.
+You should to create at least three tasks for each tag.
+You need to generate three or more tasks for each tag.
+You must make 3 tasks per tag, at least.
+Create at least 3 tasks for each tag.
 --
-With topic: Software development and tags: feature, bug
+Topic: Software development and tags: frontend, backend:
+frontend: Create a new component
+backend: Create a new endpoint
+frontend: Add a new page
+backend: Add a new endpoint
+frontend: Add a new feature
+--
+Topic: Software development
 feature: List all tags on a page
 feature: Create new container
-
 bug: Fix bug with login
 bug: Fix css issue
+bug: Some pages are not loading
+feature: Add search bar
 --
-With topic: ${topic}`
+Topic: Marketing
+social-media: Create a new post
+social-media: Promote a new post
+advertising: Create a new ad
+advertising: Promote a new ad
+advertising: Create a new campaign
+social-media: Promote with twitter
+--
+Topic: ${topic}`
   if (tags.length > 0) {
     prompt += `
- and tags: ${tags.join(', ')}`
+ and tags: ${tags.join(', ')}
+`
   }
 
   const response = await cohereFetch(GENERATE_URL, token, {
+    model: 'xlarge',
     prompt: prompt,
-    max_tokens: 100,
-    temperature: 0.1,
+    max_tokens: 120,
+    temperature: 0.2,
     k: 0,
     p: 1,
     frequency_penalty: 1,
