@@ -23,7 +23,6 @@ export default function Container () {
     if (tasks.loading || tasks.editing) {
       return
     }
-    event.preventDefault()
     if (event.key === 'Escape') {
       tasks.setConfigurationMode(false)
       tasks.selection.clean()
@@ -53,7 +52,7 @@ export default function Container () {
   }
 
   return (
-    <div ref={ref} onKeyDown={handleKeyDown} tabIndex='0'>
+    <div className={styles.tasksContainer} ref={ref} onKeyDown={handleKeyDown} tabIndex='0'>
       { tasks.loading && <div className={styles.loading} /> }
       { !tasks.loading && showConfiguration  && <Configuration />}
       { !tasks.loading && !showConfiguration && (
