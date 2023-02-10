@@ -196,6 +196,7 @@ export default function TasksProvider ({ children }) {
   }
 
   const filterByStatus = (status) => {
+    setSelectedTask(null)
     setFilter({ ...filter, status: status })
   }
 

@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { LoginContext } from '../App'
+import Layout from './Layout' 
 import styles from '../styles/Login.module.css'
 
 export default function Login() {
@@ -17,21 +18,23 @@ export default function Login() {
   }
 
   return (
-    <form className={styles.form} onSubmit={handleLogin}>
-      <p>You need to login to use this app.</p>
-      <input 
-        type="text" 
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button type="submit">Login</button>
-    </form>
+    <Layout>
+      <form className={styles.form} onSubmit={handleLogin}>
+        <p>You need to login to use this app.</p>
+        <input 
+          type="text" 
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button type="submit">Login</button>
+      </form>
+    </Layout>
   )
 }

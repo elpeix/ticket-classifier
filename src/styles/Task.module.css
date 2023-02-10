@@ -3,7 +3,18 @@
 }
 
 .selected {
-  background-color: var(--color-primary-opacity);
+  position: relative;
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+.selected::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0.32rem;
+  height: 100%;
+  background-color: var(--color-primary);
 }
 
 .task {

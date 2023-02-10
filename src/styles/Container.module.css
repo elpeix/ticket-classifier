@@ -1,3 +1,11 @@
+.tasksContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  min-height: 100vh;
+}
 .tasksContainer:focus {
   outline: none;
 }

@@ -6,6 +6,7 @@ import TaskInput from './TaskInput'
 import TaskList from './TaskList'
 import { TasksContext } from './TasksProvider'
 import styles from '../styles/Container.module.css'
+import Layout from './Layout'
 
 export default function Container () {
 
@@ -24,7 +25,11 @@ export default function Container () {
       return
     }
     if (event.key === 'Escape') {
-      tasks.setConfigurationMode(false)
+      if (tasks.configurationMode) {
+        tasks.setConfigurationMode(false)
+      } else if ( tasks.filter.tag !== '') {
+        tasks.filter.filterByTag('')
+      }
       tasks.selection.clean()
     }
     if (tasks.configurationMode) {
@@ -64,28 +69,44 @@ export default function Container () {
     if (event.key === 'f') {
       tasks.setSearching(true)
     }
+    if (event.key === 'p') {
+      if (tasks.filter.status === 'pending') {
+        tasks.filter.filterByStatus('')
+      } else {
+        tasks.filter.filterByStatus('pending')
+      }
+    }
+    if (event.key === 'c') {
+      if (tasks.filter.status === 'completed') {
+        tasks.filter.filterByStatus('')
+      } else {
+        tasks.filter.filterByStatus('completed')
+      }
+    }
   }
 
   return (
     <div className={styles.tasksContainer} ref={ref} onKeyDown={handleKeyDown} tabIndex='0'>
-      { tasks.loading && <div className={styles.loading} /> }
-      { !tasks.loading && showConfiguration  && <Configuration />}
-      { !tasks.loading && !showConfiguration && (
-        <>
-          <div className={styles.topic}>
-            <h2>{tasks.topic}</h2>
-            <button 
-              className={`simpleButton ${styles.configureButton}`} 
-              onClick={() => tasks.setConfigurationMode(true)}>
-              Configure
-            </button>
-          </div>
-          <TaskInput />
-          <FilterBar />
-          <TaskList />
-          <CleanerCompleted />
-        </>
-      )}
+      <Layout>
+        { tasks.loading && <div className={styles.loading} /> }
+        { !tasks.loading && showConfiguration  && <Configuration />}
+        { !tasks.loading && !showConfiguration && (
+          <>
+            <div className={styles.topic}>
+              <h2>{tasks.topic}</h2>
+              <button 
+                className={`simpleButton ${styles.configureButton}`} 
+                onClick={() => tasks.setConfigurationMode(true)}>
+                Configure
+              </button>
+            </div>
+            <TaskInput />
+            <FilterBar />
+            <TaskList />
+            <CleanerCompleted />
+          </>
+        )}
+      </Layout>
     </div>
   )
 }

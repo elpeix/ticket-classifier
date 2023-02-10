@@ -5,6 +5,8 @@ import { TasksContext } from './TasksProvider'
 
 export default function Task({ task, tags }) {
 
+  const offset = 100
+
   const tasks = useContext(TasksContext)
   const [name, setName] = useState('')
   const [editMode, setEditMode] = useState(false)
@@ -24,7 +26,11 @@ export default function Task({ task, tags }) {
       taskEditRef.current.focus()
     }
     if (task.selected || (tasks.lastAdded && tasks.lastAdded.id === task.id)) {
-      taskRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      if (taskRef.current.offsetTop < window.scrollY + offset) {
+        taskRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      } else if (taskRef.current.offsetTop > window.scrollY + window.innerHeight - offset) {
+        taskRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      }
     }
   }, [editMode, task, tasks])
 
