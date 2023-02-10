@@ -14,10 +14,10 @@ export default function Container () {
   const ref = useRef()
 
   useEffect(() => {
-    if (!tasks.editing && !tasks.adding && !tasks.searching) {
+    if (!tasks.editing && !tasks.adding && !tasks.searching && !tasks.configurationMode) {
       ref.current.focus()
     }
-  }, [tasks.editing, tasks.adding, tasks.searching])
+  }, [tasks.editing, tasks.adding, tasks.searching, tasks.configurationMode])
 
   const handleKeyDown = (event) => {
     if (tasks.loading || tasks.editing || tasks.adding || tasks.searching) {
