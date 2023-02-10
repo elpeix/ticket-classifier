@@ -52,14 +52,8 @@ export default function TaskInput() {
     setTaskInput('')
   }
 
-  const handleFocus = () => {
-    tasks.selection.clean()
-    tasks.setAdding(true)
-  }
-
-  const handleBlur = () => {
-    tasks.setAdding(false)
-  }
+  const handleFocus = () => tasks.setAdding(true)
+  const handleBlur = () => tasks.setAdding(false)
 
   return (
     <div className={styles.container}>
@@ -69,6 +63,7 @@ export default function TaskInput() {
           className={styles.input}
           type="text"
           placeholder="Add task"
+          onClick={handleFocus}
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={handleChange}

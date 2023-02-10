@@ -1,17 +1,28 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import { TasksContext } from './TasksProvider'
 import styles from '../styles/FilterBar.module.css'
 
 export default function FilterBar() {
 
   const tasks = useContext(TasksContext)
+  const searchRef = useRef()
+
+  useEffect(() => {
+    if (tasks.searching) {
+      searchRef.current.focus()
+    }
+  }, [tasks.searching])
 
   const handleKeyUp = (event) => {
     if (event.key === 'Escape') {
       tasks.filter.filterByName('')
-      tasks.setEditing(false)
+      tasks.setSearching(false)
     }
   }
+
+  const handleChange = e => tasks.filter.filterByName(e.target.value)
+  const handleFocus = () => tasks.setSearching(true)
+  const handleBlur = () => tasks.setSearching(false)
 
   return (
     <div className={styles.bar}>
@@ -49,12 +60,14 @@ export default function FilterBar() {
 
       <div className={styles.filterByName}>
         <input
+          ref={searchRef}
           type="text"
           placeholder="Filter by name"
           value={tasks.filter.name}
-          onChange={e => tasks.filter.filterByName(e.target.value)}
-          onFocus={() => tasks.setEditing(true)}
-          onBlur={() => tasks.setEditing(false)}
+          onClick={handleFocus}
+          onChange={handleChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           onKeyUp={handleKeyUp}
         />
       </div>

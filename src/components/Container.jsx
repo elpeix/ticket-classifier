@@ -14,13 +14,13 @@ export default function Container () {
   const ref = useRef()
 
   useEffect(() => {
-    if (!tasks.editing && !tasks.adding) {
+    if (!tasks.editing && !tasks.adding && !tasks.searching) {
       ref.current.focus()
     }
-  }, [tasks.editing, tasks.adding])
+  }, [tasks.editing, tasks.adding, tasks.searching])
 
   const handleKeyDown = (event) => {
-    if (tasks.loading || tasks.editing || tasks.adding) {
+    if (tasks.loading || tasks.editing || tasks.adding || tasks.searching) {
       return
     }
     if (event.key === 'Escape') {
@@ -60,6 +60,9 @@ export default function Container () {
     }
     if (event.key === 'a') {
       tasks.setAdding(true)
+    }
+    if (event.key === 'f') {
+      tasks.setSearching(true)
     }
   }
 

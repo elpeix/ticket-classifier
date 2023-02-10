@@ -16,14 +16,11 @@ export default function TasksProvider ({ children }) {
   const [sampleTasks, setSampleTasks] = useState([])
   const [archivedTasks, setArchivedTasks] = useState([])
   const [configurationMode, setConfigurationMode] = useState(false)
-  const [filter, setFilter] = useState({
-    status: '',
-    tag: '',
-    name: ''    
-  })
+  const [filter, setFilter] = useState({ status: '', tag: '', name: '' })
   const [loading, setLoading] = useState(true)
   const [addMode, setAddMode] = useState(false)
   const [editMode, setEditMode] = useState(false)
+  const [searchMode, setSearchMode] = useState(false)
   const [selectedTask, setSelectedTask] = useState(null)
   const [lastAdded, setLastAdded] = useState(null)
 
@@ -307,6 +304,7 @@ export default function TasksProvider ({ children }) {
     setEditMode(mode)
     if (mode) {
       setAddMode(false)
+      setSearchMode(false)
     }
   }
 
@@ -315,6 +313,16 @@ export default function TasksProvider ({ children }) {
     setAddMode(mode)
     if (mode) {
       setEditMode(false)
+      setSearchMode(false)
+    }
+  }
+
+  const setSearching = (mode) => {
+    setSelectedTask(null)
+    setSearchMode(mode)
+    if (mode) {
+      setEditMode(false)
+      setAddMode(false)
     }
   }
 
@@ -362,6 +370,8 @@ export default function TasksProvider ({ children }) {
     setEditing,
     adding: addMode,
     setAdding,
+    searching: searchMode,
+    setSearching,
     configurationMode,
     setConfigurationMode
   }
