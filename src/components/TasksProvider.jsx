@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { classify } from '../services/cohere'
 import { AppContext } from './TaskApp'
+import TaskSelector from '../services/TaskSelector'
 
 export const TasksContext = createContext()
 
@@ -21,8 +22,10 @@ export default function TasksProvider ({ children }) {
     name: ''    
   })
   const [loading, setLoading] = useState(true)
+  const [addMode, setAddMode] = useState(false)
   const [editMode, setEditMode] = useState(false)
   const [selectedTask, setSelectedTask] = useState(null)
+  const [lastAdded, setLastAdded] = useState(null)
 
   useEffect(() => {
     const storedTopic = localStorage.getItem('topic')
@@ -77,9 +80,10 @@ export default function TasksProvider ({ children }) {
 
     const newTasks = [...tasks]
     saveTasks([...newTasks, newTask])
+    setLastAdded(newTask)
 
     if (tag) {
-      return
+      return newTask
     }
 
     getTag(taskInput)
@@ -191,24 +195,15 @@ export default function TasksProvider ({ children }) {
   }    
 
   const filterByTag = (tag) => {
-    setFilter({
-      ...filter,
-      tag: filter.tag === tag ? '' : tag
-    })
+    setFilter({ ...filter, tag: filter.tag === tag ? '' : tag })
   }
 
   const filterByStatus = (status) => {
-    setFilter({
-      ...filter,
-      status: status
-    })
+    setFilter({ ...filter, status: status })
   }
 
   const filterByName = (name) => {
-    setFilter({
-      ...filter,
-      name: name
-    })
+    setFilter({ ...filter, name: name })
   }
 
   const getFilteredTasks = () => {
@@ -288,33 +283,39 @@ export default function TasksProvider ({ children }) {
   }
 
   const selectNext = () => {
-    const filteredTasks = getFilteredTasks()
-    if (!filteredTasks.length) {
-      return
-    }
-    const index = filteredTasks.findIndex(task => task.selected)
-    if (index === -1) {
-      selectTask(filteredTasks[0].id)
-    } else {
-      selectTask(filteredTasks[(index + 1) % filteredTasks.length].id)
-    }
+    new TaskSelector(getFilteredTasks()).selectNext(t => setSelectedTask(t))
   }
 
   const selectPrevious = () => {
-    const filteredTasks = getFilteredTasks()
-    if (!filteredTasks.length) {
-      return
-    }
-    const index = filteredTasks.findIndex(task => task.selected)
-    if (index === -1) {
-      selectTask(filteredTasks[0].id)
-    } else {
-      selectTask(filteredTasks[(index - 1 + filteredTasks.length) % filteredTasks.length].id)
-    }
+    new TaskSelector(getFilteredTasks()).selectPrevious(t => setSelectedTask(t))
   }
 
   const selectTask = (id) => {
-    setSelectedTask(tasks.find(task => task.id === id))
+    new TaskSelector(getFilteredTasks()).select(id, t => setSelectedTask(t))
+  }
+
+  const selectFirst = () => {
+    new TaskSelector(getFilteredTasks()).selectFirst(t => setSelectedTask(t))
+  }
+
+  const selectLast = () => {
+    new TaskSelector(getFilteredTasks()).selectLast(t => setSelectedTask(t))
+  }
+
+  const setEditing = (mode) => {
+    setSelectedTask(null)
+    setEditMode(mode)
+    if (mode) {
+      setAddMode(false)
+    }
+  }
+
+  const setAdding = (mode) => {
+    setSelectedTask(null)
+    setAddMode(mode)
+    if (mode) {
+      setEditMode(false)
+    }
   }
 
   const elements = {
@@ -336,10 +337,13 @@ export default function TasksProvider ({ children }) {
       clean: () => setSelectedTask(null),
       next: selectNext,
       previous: selectPrevious,
+      first: selectFirst,
+      last: selectLast,
       selected: selectedTask,
       select: selectTask,
     },
     addTask,
+    lastAdded,
     updateTask,
     toggleTask,
     removeTask,
@@ -355,10 +359,9 @@ export default function TasksProvider ({ children }) {
     examplesAreEmpty,
     loading,
     editing: editMode,
-    setEditing: (mode) => {
-      setSelectedTask(null)
-      setEditMode(mode)
-    },
+    setEditing,
+    adding: addMode,
+    setAdding,
     configurationMode,
     setConfigurationMode
   }

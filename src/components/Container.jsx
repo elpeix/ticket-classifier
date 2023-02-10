@@ -14,13 +14,13 @@ export default function Container () {
   const ref = useRef()
 
   useEffect(() => {
-    if (!tasks.editing) {
+    if (!tasks.editing && !tasks.adding) {
       ref.current.focus()
     }
-  }, [tasks.editing])
+  }, [tasks.editing, tasks.adding])
 
   const handleKeyDown = (event) => {
-    if (tasks.loading || tasks.editing) {
+    if (tasks.loading || tasks.editing || tasks.adding) {
       return
     }
     if (event.key === 'Escape') {
@@ -30,6 +30,10 @@ export default function Container () {
     if (tasks.configurationMode) {
       return
     }
+
+    event.preventDefault()
+    event.stopPropagation()
+
     if (event.altKey && event.key === ',') {
       tasks.setConfigurationMode(true)
     }
@@ -38,6 +42,12 @@ export default function Container () {
     }
     if (event.key === 'ArrowDown') {
       tasks.selection.next()
+    }
+    if (event.key === 'ArrowLeft' || event.key === 'PageUp') {
+      tasks.selection.first()
+    }
+    if (event.key === 'ArrowRight' || event.key === 'PageDown') {
+      tasks.selection.last()
     }
     if (event.key === 'Delete') {
       tasks.removeTask(tasks.selection.selected.id)
@@ -48,7 +58,9 @@ export default function Container () {
     if (event.key === ' ' && tasks.selection.selected) {
       tasks.setEditing(tasks.selection.selected)
     }
-    console.log(event.key)
+    if (event.key === 'a') {
+      tasks.setAdding(true)
+    }
   }
 
   return (

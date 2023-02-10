@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import styles from '../styles/TaskInput.module.css'
 import { TasksContext } from './TasksProvider'
 
@@ -8,6 +8,14 @@ export default function TaskInput() {
   
   const [taskInput, setTaskInput] = useState('')
   const [error, setError] = useState('')
+  const taskInputRef = useRef()
+
+  useEffect(() => {
+    if (tasks.adding) {
+      taskInputRef.current.focus()
+    }
+  }, [tasks.adding])
+
 
   const handleChange = (e) => {
     setError('')
@@ -17,8 +25,15 @@ export default function TaskInput() {
   const handleKeyUp = (e) => {
     if (e.key === 'Enter') {
       handleClick()
+      if (!e.ctrlKey) {
+        e.currentTarget.blur()
+      }
+
     }
     if (e.key === 'Escape') {
+      if (taskInput === '') {
+        e.currentTarget.blur()
+      }
       setError('')
       setTaskInput('')
     }
@@ -39,17 +54,18 @@ export default function TaskInput() {
 
   const handleFocus = () => {
     tasks.selection.clean()
-    tasks.setEditing(true)
+    tasks.setAdding(true)
   }
 
   const handleBlur = () => {
-    tasks.setEditing(false)
+    tasks.setAdding(false)
   }
 
   return (
     <div className={styles.container}>
       <div className={styles.taskInput}>
         <input 
+          ref={taskInputRef}
           className={styles.input}
           type="text"
           placeholder="Add task"

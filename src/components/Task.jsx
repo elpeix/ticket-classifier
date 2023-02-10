@@ -23,6 +23,9 @@ export default function Task({ task, tags }) {
     if (editMode) {
       taskEditRef.current.focus()
     }
+    if (task.selected || (tasks.lastAdded && tasks.lastAdded.id === task.id)) {
+      taskRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }
   }, [editMode, task, tasks])
 
   const bigEdit = tags.length > 3 ? styles.bigEdit : ''
