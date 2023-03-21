@@ -41,8 +41,10 @@
   --color-tertiary-active: #e7b82a;
   --color-tertiary-invert: #231F20;
 
+  --color-success: #24aa7d;
   --color-error: #bb4430;
   --color-disabled: #868686;
+  --color-grey: #868686;
 
 
   color: var(--text-color);

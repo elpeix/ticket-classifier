@@ -46,3 +46,18 @@
 .configureButton {
   width: auto;
 }
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1rem;
+}
+
+@media (max-width: 768px) {
+  .footer {
+    gap: 1rem;
+    flex-direction: column-reverse;
+  }
+}

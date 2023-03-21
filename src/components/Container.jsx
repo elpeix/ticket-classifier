@@ -7,6 +7,7 @@ import TaskList from './TaskList'
 import { TasksContext } from './TasksProvider'
 import styles from '../styles/Container.module.css'
 import Layout from './Layout'
+import TasksCounter from './TasksCounter'
 
 export default function Container () {
 
@@ -103,7 +104,14 @@ export default function Container () {
             <TaskInput />
             <FilterBar />
             <TaskList />
-            <CleanerCompleted />
+            <div className={styles.footer}>
+              <div>
+                <CleanerCompleted />
+              </div>
+              <div>
+                <TasksCounter />
+              </div>
+            </div>
           </>
         )}
       </Layout>
