@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import React, { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { classify } from '../services/cohere'
 import { AppContext } from './TaskApp'
 import TaskSelector from '../services/TaskSelector'
@@ -204,7 +204,7 @@ export default function TasksProvider ({ children }) {
     setFilter({ ...filter, name: name })
   }
 
-  const getFilteredTasks = () => {
+  const filteredTasks = useMemo(() => {
     let filteredTasks = tasks.map((task, index) => {
       return { ...task, index }
     })
@@ -232,7 +232,7 @@ export default function TasksProvider ({ children }) {
       }
       return newTask
     })
-  }
+  }, [tasks, filter, selectedTask])
 
   const cleanCompletedTasks = () => {
     const newArchivedTasks = archivedTasks.concat(tasks.filter(task => task.completed && task.tag))
@@ -281,23 +281,23 @@ export default function TasksProvider ({ children }) {
   }
 
   const selectNext = () => {
-    new TaskSelector(getFilteredTasks()).selectNext(t => setSelectedTask(t))
+    new TaskSelector(filteredTasks).selectNext(t => setSelectedTask(t))
   }
 
   const selectPrevious = () => {
-    new TaskSelector(getFilteredTasks()).selectPrevious(t => setSelectedTask(t))
+    new TaskSelector(filteredTasks).selectPrevious(t => setSelectedTask(t))
   }
 
   const selectTask = (id) => {
-    new TaskSelector(getFilteredTasks()).select(id, t => setSelectedTask(t))
+    new TaskSelector(filteredTasks).select(id, t => setSelectedTask(t))
   }
 
   const selectFirst = () => {
-    new TaskSelector(getFilteredTasks()).selectFirst(t => setSelectedTask(t))
+    new TaskSelector(filteredTasks).selectFirst(t => setSelectedTask(t))
   }
 
   const selectLast = () => {
-    new TaskSelector(getFilteredTasks()).selectLast(t => setSelectedTask(t))
+    new TaskSelector(filteredTasks).selectLast(t => setSelectedTask(t))
   }
 
   const setEditing = (mode) => {
@@ -328,7 +328,7 @@ export default function TasksProvider ({ children }) {
   }
 
   const elements = {
-    tasks : getFilteredTasks(),
+    tasks : filteredTasks,
     totalTasks: tasks.length,
     filter : {
       status: filter.status,
@@ -339,6 +339,8 @@ export default function TasksProvider ({ children }) {
       filterByName
     },
     totals: {
+      total: tasks.length,
+      filtered: filteredTasks.length != tasks.length ? filteredTasks.length : null,
       completed: tasks.filter(task => task.completed).length,
       pending: tasks.filter(task => !task.completed).length
     },
