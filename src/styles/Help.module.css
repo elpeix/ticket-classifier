@@ -1,0 +1,76 @@
+.help {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-primary-opacity);
+  backdrop-filter: blur(0.3rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+.help > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem 3rem;
+  max-width: 40rem;
+  margin: 0 1rem;
+  background-color: var(--background-color);
+  border-radius: 0.3rem;
+  box-shadow: 0 0 0.5rem var(--color-primary-opacity);
+}
+
+.help .close {
+  position: absolute;
+  font-size: 1.5rem;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.help .close:hover {
+  opacity: 1;
+}
+
+
+.help .spacer {
+  width: 100%;
+  height: 0.1rem;
+}
+
+.help h2, .help h3, .help p {
+  padding: 0;
+  margin: 0;
+}
+
+.help ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  gap: 0.5rem;
+}
+
+.help ul strong {
+  font-variation-settings: 'wght' var(--font-weight-bold), 
+                           'wdth' var(--font-v-wdth-wide),
+                           'slnt' var(--font-v-slnt);
+  color: var(--color-primary);
+}

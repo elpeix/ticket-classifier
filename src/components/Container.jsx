@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import CleanerCompleted from './CleanerCompleted'
 import Configuration from './Configuration'
 import FilterBar from './FilterBar'
@@ -8,11 +8,13 @@ import { TasksContext } from './TasksProvider'
 import styles from '../styles/Container.module.css'
 import Layout from './Layout'
 import TasksCounter from './TasksCounter'
+import Help from './Help'
 
 export default function Container () {
 
   const tasks = useContext(TasksContext)
   const showConfiguration = tasks.configurationMode 
+  const [showHelp, setShowHelp] = useState(false)
   const ref = useRef()
 
   useEffect(() => {
@@ -25,6 +27,13 @@ export default function Container () {
     if (tasks.loading || tasks.editing || tasks.adding || tasks.searching) {
       return
     }
+    if (event.key === 'F5' 
+      || event.ctrlKey && event.key === 'r'
+      || event.metaKey && event.key === 'r'
+      || event.ctrlKey && event.key === 'F5'
+      || event.metaKey && event.key === 'F5') {
+      return
+    }
     if (event.key === 'Escape') {
       if (tasks.configurationMode) {
         tasks.setConfigurationMode(false)
@@ -32,6 +41,9 @@ export default function Container () {
         tasks.filter.filterByTag('')
       }
       tasks.selection.clean()
+      if (showHelp) {
+        setShowHelp(false)
+      }
     }
     if (tasks.configurationMode) {
       return
@@ -84,6 +96,9 @@ export default function Container () {
         tasks.filter.filterByStatus('completed')
       }
     }
+    if (event.key === 'h') {
+      setShowHelp(!showHelp)
+    }
   }
 
   return (
@@ -114,6 +129,7 @@ export default function Container () {
             </div>
           </>
         )}
+        <Help show={showHelp} onClose={() => setShowHelp(false)} />
       </Layout>
     </div>
   )
