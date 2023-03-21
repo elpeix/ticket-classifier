@@ -16,19 +16,17 @@ export default function TasksCounter() {
             <div className={styles.completedBar} style={{ width: `${completedPercent}%` }} />
           </div>
           <div className={styles.counter}>
-            {tasks.totals.total > 0 && (
-              <div className={styles.total}>
-                <span>Total:</span>
-                {tasks.totals.total}
-              </div>
-            )}
-            {tasks.totals.completed > 0 && (
+            <div className={styles.total}>
+              <span>Total:</span>
+              {tasks.totals.total}
+            </div>
+            {tasks.totals.completed >= 0 && (
               <div className={styles.completed}>
                 <span>Completed:</span>
                 {tasks.totals.completed}
               </div>
             )}
-            {tasks.totals.pending > 0 && (
+            {tasks.totals.pending >= 0 && (
               <div className={styles.pending}>
                 <span>Pending:</span>
                 {tasks.totals.pending}
