@@ -1,11 +1,11 @@
 
 .tag {
-  font-size: 0.8rem;
+  font-size: calc(0.8rem * var(--size-ratio));
   font-weight: var(--font-weight-bold);
   font-variation-settings: 'wght' 500, 
                            'wdth' var(--font-v-wdth-normal),
                            'slnt' var(--font-v-italic);
-  padding: 0.3rem 1rem;
+  padding: calc(0.3rem * var(--size-ratio)) calc(1rem * var(--size-ratio));
   border-radius: 0.3rem;
   background-color: var(--color-tertiary);
   color: var(--color-tertiary-invert);
@@ -21,8 +21,8 @@
 
 @media screen and (max-width: 768px) {
   .tag {
-    font-size: 0.8rem;
-    padding: 0.2rem 0.5rem;
+    font-size: calc(0.8rem * var(--size-ratio));
+    padding: calc(0.2rem * var(--size-ratio)) calc(0.5rem * var(--size-ratio));
     margin-right: 0;
   }
 }

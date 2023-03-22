@@ -60,6 +60,12 @@
 
   --icon-search: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' viewBox='0 0 24 24' stroke-width='2.4' stroke='rgb(126, 189, 194)' %3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z' /%3E%3C/svg%3E");
   --icon-edit: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='rgb(126, 189, 194)' viewBox='0 0 24 24' stroke='none' %3E%3Cpath d='M16.77 8l1.94-2a1 1 0 0 0 0-1.41l-3.34-3.3a1 1 0 0 0-1.41 0L12 3.23zm-5.81-3.71L1 14.25V19h4.75l9.96-9.96-4.75-4.75z'/%3E%3C/svg%3E");
+
+  --size-ratio: 1;
+}
+
+body.compact {
+  --size-ratio: 0.8;
 }
 
 * {
@@ -92,7 +98,7 @@ body {
   justify-content: space-between;
   place-items: center;
   align-items: center;
-  padding: 0 1rem;
+  padding: 0 calc(1rem * var(--size-ratio));
   width: 100%;
   min-height: 100vh;
 }
@@ -103,7 +109,7 @@ body {
   justify-content: space-between;
   place-items: center;
   align-items: center;
-  padding: 0 1rem;
+  padding: 0 calc(1rem * var(--size-ratio));
   width: 100%;
   min-height: 100vh;
 }
@@ -115,7 +121,7 @@ header {
 }
 
 main {
-  padding: 0 0 1rem 0;
+  padding: 0 0 calc(1rem * var(--size-ratio)) 0;
   width: 100%;
   max-width: 56rem;
 }
@@ -125,11 +131,11 @@ footer {
 }
 
 h1 {
-  font-size: 2.2rem;
+  font-size: calc(2.2rem * var(--size-ratio));
   font-weight: var(--font-weight-bold);
   line-height: 1.1;
-  margin: 1rem 0 0;
-  padding: 1rem 0 0;
+  margin: calc(1rem * var(--size-ratio)) 0 0;
+  padding: calc(1rem * var(--size-ratio)) 0 0;
 
   font-variation-settings: 'wght' var(--font-weight-regular), 
                            'wdth' var(--font-v-wdth-wide),
@@ -137,10 +143,10 @@ h1 {
 }
 
 h2 {
-  font-size: 1.8rem;
+  font-size: calc(1.8rem * var(--size-ratio));
   font-weight: var(--font-weight-bold);
   line-height: 1.1;
-  padding: 1rem 0 0;
+  padding: calc(1rem * var(--size-ratio)) 0 0;
 
   font-variation-settings: 'wght' var(--font-weight-regular), 
                            'wdth' var(--font-v-wdth-wide),
@@ -148,10 +154,10 @@ h2 {
 }
 
 h3 {
-  font-size: 1.4rem;
+  font-size: calc(1.4rem * var(--size-ratio));
   font-weight: var(--font-weight-bold);
   line-height: 1.1;
-  padding: 1rem 0 0;
+  padding: calc(1rem * var(--size-ratio)) 0 0;
 
   font-variation-settings: 'wght' var(--font-weight-regular), 
                            'wdth' var(--font-v-wdth-wide),
@@ -160,14 +166,14 @@ h3 {
 
 p {
   padding: 0;
-  margin: 1rem 0;
+  margin: calc(1rem * var(--size-ratio)) 0;
 }
 
 button {
   border-radius: 0.4rem;
   border: 1px solid transparent;
-  padding: 0.5rem 1rem;
-  font-size: 1.1rem;
+  padding: calc(0.5rem * var(--size-ratio)) calc(1rem * var(--size-ratio));
+  font-size: calc(1.1rem * var(--size-ratio));
   font-weight: 500;
   font-family: inherit;
 
@@ -200,8 +206,8 @@ button:disabled {
 input {
   border-radius: 0.4rem;
   border: 1px solid var(--color-primary);
-  padding: 0.5rem;
-  font-size: 1.2rem;
+  padding: calc(0.5rem * var(--size-ratio));
+  font-size: calc(1.2rem * var(--size-ratio));
   font-weight: 500;
   font-family: inherit;
 
@@ -233,12 +239,14 @@ ul {
 .remove {
   border: none;
   outline: none;
-  font-size: 1.4rem;
+  font-size: calc(1.4rem * var(--size-ratio));
   font-family: inherit;
   color: inherit;
   background-color: transparent;
   cursor: pointer;
-  max-width: 3rem;
+  padding: 0;
+  width: calc(3rem * var(--size-ratio));
+  height: calc(2.5rem * var(--size-ratio));
 }
 
 .remove:hover {
@@ -269,7 +277,7 @@ ul {
   border: none;
   color: var(--color-primary);
   cursor: pointer;
-  padding: 0.5rem 1rem;
+  padding: calc(0.5rem * var(--size-ratio)) calc(1rem * var(--size-ratio));
 }
 
 .simpleButton:hover {

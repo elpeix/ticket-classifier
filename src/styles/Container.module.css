@@ -52,8 +52,8 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 1rem 0;
-  gap: 2rem;
+  padding: calc(1rem * var(--size-ratio)) 0;
+  gap: calc(2rem * var(--size-ratio));
 }
 
 .footer .cleaner {
@@ -68,7 +68,7 @@
 
 @media (max-width: 768px) {
   .footer {
-    gap: 1rem;
+    gap: calc(1rem * var(--size-ratio));
     flex-direction: column-reverse;
   }
 }

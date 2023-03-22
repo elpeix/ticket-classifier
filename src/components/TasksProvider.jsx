@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useMemo, useState } from '
 import { classify } from '../services/cohere'
 import { AppContext } from './TaskApp'
 import TaskSelector from '../services/TaskSelector'
+import useTheme from '../hooks/useTheme'
 
 export const TasksContext = createContext()
 
@@ -23,6 +24,12 @@ export default function TasksProvider ({ children }) {
   const [searchMode, setSearchMode] = useState(false)
   const [selectedTask, setSelectedTask] = useState(null)
   const [lastAdded, setLastAdded] = useState(null)
+
+  const [compactMode, setCompactMode] = useTheme()
+
+  useEffect(() => {
+    document.body.classList.toggle('compact', compactMode)
+  }, [compactMode])
 
   useEffect(() => {
     const storedTopic = localStorage.getItem('topic')
@@ -376,7 +383,9 @@ export default function TasksProvider ({ children }) {
     searching: searchMode,
     setSearching,
     configurationMode,
-    setConfigurationMode
+    setConfigurationMode,
+    compactMode,
+    setCompactMode
   }
   
   return (

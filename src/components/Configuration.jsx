@@ -12,6 +12,7 @@ export default function Configuration() {
   const tasks = useContext(TasksContext)
   
   const [tokenValue, setTokenValue] = useState(token)
+  const [compactMode, setCompactMode] = useState(tasks.compactMode)
   const debouncedValue = useDebounce(tokenValue, 500)
 
   useEffect(() => {
@@ -25,8 +26,6 @@ export default function Configuration() {
   const [examples, setExamples] = useState(tasks.sampleTasks)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-
-  const canCancel = !tasks.examplesAreEmpty()
 
   const handleTopic = (e) => {
     setTopic(e.target.value)
@@ -79,6 +78,7 @@ export default function Configuration() {
     //   setError('You must provide examples')
     //   return
     // }
+    tasks.setCompactMode(compactMode)
     tasks.saveTopic(topic)
     tasks.saveSampleTasks(examples)
   }
@@ -192,16 +192,22 @@ export default function Configuration() {
         </section>
       )}
       <section className={styles.section}>
+        <h3>Compact mode</h3>
+        <label>
+          <input
+            type='checkbox'
+            checked={compactMode}
+            onChange={() => setCompactMode(!compactMode)}
+          />
+          <span>{' '}</span>
+          Show tasks more compactly
+        </label>
+      </section>
+      <section className={styles.section}>
         <button onClick={save} className={styles.save}>Save</button>
-
-        {canCancel && (
-          <button 
-            onClick={() => tasks.setConfigurationMode(false)}
-            className='simpleButton'
-          >
-            Cancel
-          </button>
-        )}
+        <button onClick={() => tasks.setConfigurationMode(false)} className='simpleButton'>
+          Cancel
+        </button>
       </section>
     </div>
   )

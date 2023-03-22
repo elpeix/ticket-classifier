@@ -1,7 +1,7 @@
 .container {
   background-color: var(--background-color);
-  padding: 1rem 0;
-  height: 5.6rem;
+  padding: calc(1rem * var(--size-ratio)) 0;
+  height: calc(5.6rem * var(--size-ratio));
   position:sticky;
   top:0;
   z-index: 1;
@@ -13,7 +13,7 @@
   height: 100%;
   border: none;
   outline: none;
-  font-size: 1.5rem;
+  font-size: calc(1.5rem * var(--size-ratio));
   font-family: inherit;
   color: inherit;
   display: flex;
@@ -31,7 +31,7 @@
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   outline: none;
-  font-size: 1.5rem;
+  font-size: calc(1.5rem * var(--size-ratio));
   font-family: inherit;
   color: inherit;
   background-color: transparent;
@@ -43,7 +43,7 @@
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   outline: none;
-  font-size: 1.2rem;
+  font-size: calc(1.2rem * var(--size-ratio));
   font-family: inherit;
   font-variation-settings: 'wght' 400, 
                            'wdth' 150,
@@ -53,7 +53,7 @@
   cursor: pointer;
   text-transform: uppercase;
   transition: border-color 0.25s, color 0.1s;
-  width: 5rem;
+  width: calc(5rem * var(--size-ratio));
 }
 
 .button:hover,
@@ -68,10 +68,10 @@
 
 .error {
   color: var(--color-error);
-  font-size: 1rem;
+  font-size: calc(1rem * var(--size-ratio));
   text-align: right;
-  margin-top: -2.4rem;
-  margin-right: 6rem;
+  margin-top: calc(-2.4rem * var(--size-ratio));
+  margin-right: calc(6rem * var(--size-ratio));
 
   font-variation-settings: 'wght' var(--font-weight-regular), 
                            'wdth' var(--font-v-wdth-wide),
