@@ -72,7 +72,8 @@ export default function TaskInput() {
         />
         <button
           className={styles.button} 
-          onClick={handleClick}>
+          onClick={handleClick}
+          title="Add (a)">
             Add
         </button>
       </div>

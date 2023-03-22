@@ -31,7 +31,8 @@ export default function Container () {
       || event.ctrlKey && event.key === 'r'
       || event.metaKey && event.key === 'r'
       || event.ctrlKey && event.key === 'F5'
-      || event.metaKey && event.key === 'F5') {
+      || event.metaKey && event.key === 'F5'
+      || event.key === 'Tab') {
       return
     }
     if (event.key === 'Escape') {
@@ -45,7 +46,17 @@ export default function Container () {
         setShowHelp(false)
       }
     }
+    
     if (tasks.configurationMode) {
+      return
+    }
+  
+    if (event.key === 'h') {
+      setShowHelp(!showHelp)
+      return
+    }
+
+    if (showHelp) {
       return
     }
 
@@ -96,9 +107,6 @@ export default function Container () {
         tasks.filter.filterByStatus('completed')
       }
     }
-    if (event.key === 'h') {
-      setShowHelp(!showHelp)
-    }
   }
 
   return (
@@ -112,7 +120,8 @@ export default function Container () {
               <h2>{tasks.topic}</h2>
               <button 
                 className={`simpleButton ${styles.configureButton}`} 
-                onClick={() => tasks.setConfigurationMode(true)}>
+                onClick={() => tasks.setConfigurationMode(true)}
+                title='Configure (Alt+,)'>
                 Configure
               </button>
             </div>
@@ -120,12 +129,15 @@ export default function Container () {
             <FilterBar />
             <TaskList />
             <div className={styles.footer}>
-              <div>
+              <div className={styles.cleaner}>
                 <CleanerCompleted />
               </div>
               <div>
                 <TasksCounter />
               </div>
+              <button className={`simpleButton ${styles.helpButton}`} onClick={() => setShowHelp(!showHelp)} title="Help (h)">
+                <span className='material-icons'>?</span>
+              </button>
             </div>
           </>
         )}

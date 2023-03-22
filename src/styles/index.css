@@ -44,7 +44,7 @@
   --color-success: #24aa7d;
   --color-error: #bb4430;
   --color-disabled: #868686;
-  --color-grey: #868686;
+  --color-grey: #a4a4a4;
 
 
   color: var(--text-color);
@@ -288,13 +288,13 @@ ul {
 
 @media (prefers-color-scheme: light) {
   :root {
-    --background-color: #EFE6DD;
-    --text-color: #313131;
+    --background-color: #ffffff;
+    --text-color: #231F20;
 
-    --color-primary: rgb(73, 186, 194);
-    --color-primary-hover: rgb(41, 165, 173);
-    --color-primary-active: #0e96a0;
-    --color-primary-invert: #444444;
+    --color-primary: rgb(0, 110, 130);
+    --color-primary-hover: rgb(0, 110, 130);
+    --color-primary-active: rgb(0, 110, 130);
+    --color-primary-invert: #ffffff;
     --color-primary-opacity: rgba(126, 189, 194, 0.1);
   
     --color-secondary: #bb4430;
@@ -308,8 +308,12 @@ ul {
     --color-tertiary-invert: #444444;
     --color-tertiary-opacity: rgba(238, 184, 20, 0.1);
   
+    --color-success: #24aa7d;
     --color-error: #bb4430;
     --color-disabled: #868686;
+    --color-grey: #333333;
+
+
   }
   .simpleButton {
     color: var(--color-primary-active);

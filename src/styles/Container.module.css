@@ -52,7 +52,18 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 1rem;
+  padding: 1rem 0;
+  gap: 2rem;
+}
+
+.footer .cleaner {
+  flex-grow: 1;
+}
+
+.footer .helpButton {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
 }
 
 @media (max-width: 768px) {

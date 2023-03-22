@@ -96,6 +96,7 @@ export default function Task({ task, tags }) {
             checked={task.completed}
             className={styles.checkbox}
             onClick={() => tasks.toggleTask(task.id)}
+            title='Mark as completed (Enter)'
             readOnly
           />
         </div>
@@ -120,7 +121,10 @@ export default function Task({ task, tags }) {
             onDoubleClick={() => setEditMode(true)}
           >
             <span>{task.name}</span>
-            <span className={styles.editIcon} onClick={() => setEditMode(true)}></span>
+            <span 
+              className={styles.editIcon}
+              onClick={() => setEditMode(true)}
+              title="Edit (Space)" />
           </div>
         )}
         {editMode && (
@@ -139,7 +143,8 @@ export default function Task({ task, tags }) {
       </div>
       <button
         className='remove'
-        onClick={() => tasks.removeTask(task.id)}>✕</button>
+        onClick={() => tasks.removeTask(task.id)}
+        title="Delete (del)">✕</button>
     </li>
   )
 }

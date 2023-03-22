@@ -30,18 +30,21 @@ export default function FilterBar() {
         <button 
           onClick={() => tasks.filter.filterByStatus('')}
           className={tasks.filter.status === '' ? styles.active : ''}
+          title="Show all tasks"
         >
           All
         </button>
         <button 
           onClick={() => tasks.filter.filterByStatus('completed')}
           className={tasks.filter.status === 'completed' ? styles.active : ''}
+          title = "Show completed tasks (c)"
         >
           Completed
         </button>
         <button 
           onClick={() => tasks.filter.filterByStatus('pending')}
           className={tasks.filter.status === 'pending' ? styles.active : ''}
+          title = "Show pending tasks (p)"
         >
           Pending
         </button>
@@ -69,6 +72,7 @@ export default function FilterBar() {
           onFocus={handleFocus}
           onBlur={handleBlur}
           onKeyUp={handleKeyUp}
+          title="Search (f)"
         />
       </div>
     </div>
