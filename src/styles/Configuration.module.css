@@ -1,15 +1,15 @@
 section.section {
-  margin-bottom: 2rem;
+  margin-bottom: calc(2rem * var(--size-ratio));
 }
 
 input.apiKey {
-  padding: 0.5rem 1rem;
+  padding: calc(.5rem * var(--size-ratio)) calc(1rem * var(--size-ratio));
   width: 100%;
 }
 
 input.topic{
-  padding: 1rem;
-  font-size: 1.4em;
+  padding: calc(1rem * var(--size-ratio));
+  font-size: calc(1.4rem * var(--size-ratio));
   width: 100%;
 }
 
@@ -18,31 +18,40 @@ input.topic.error {
 }
 
 ul.examplesList {
-  margin: 1rem 0;
+  margin: calc(1rem * var(--size-ratio)) 0;
 }
 
 ul.examplesList li {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: calc(0.6rem * var(--size-ratio));
   width: 100%;
-  margin: 0.5rem 0;
+  margin: calc(.5rem * var(--size-ratio)) 0;
 }
 
 .name {
   width: 100%;
+  padding: calc(0.45rem * var(--size-ratio)) calc(0.6rem * var(--size-ratio));
 }
 
 .tag {
   border-color: var(--color-tertiary);
   transition: all 0.2s ease-in-out;
+  padding: calc(0.45rem * var(--size-ratio)) calc(0.6rem * var(--size-ratio));
 }
 .tag:focus,
 .tag:focus-visible {
   outline: none;
   border-color: var(--color-tertiary-active);
   background-color: var(--color-tertiary-opacity);
+}
+
+.addExampleContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(0.6rem * var(--size-ratio));
 }
 
 button.addExample,
@@ -70,16 +79,17 @@ button.generateExample:disabled {
 
 button.remove {
   max-width: 100%;
+  width: calc(3.6rem * var(--size-ratio));
 }
 
 .loading::before {
   content: "";
   display: inline-block;
-  width: 0.7rem;
-  height: 0.7rem;
+  width: calc(.7rem * var(--size-ratio));
+  height: calc(.7rem * var(--size-ratio));
   border-radius: 50%;
-  margin-left: -0.5rem;
-  margin-right: 0.5rem;
+  margin-left: calc(-.5rem * var(--size-ratio));
+  margin-right: calc(.5rem * var(--size-ratio));
   border: 2px solid var(--color-tertiary);
   border-color: var(--color-tertiary) transparent var(--color-tertiary) transparent;
   animation: spin 1s linear infinite;
@@ -95,21 +105,33 @@ button.remove {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  margin: 1rem 0;
+  gap: calc(1rem * var(--size-ratio));
+  margin: calc(1rem * var(--size-ratio)) 0;
+}
+
+.compactMode {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: calc(.6rem * var(--size-ratio));
+  cursor: pointer;
+}
+
+.compactMode div {
+  height: calc(.9rem * var(--size-ratio));
 }
 
 .save {
-  margin: 2rem 0;
+  margin: calc(2rem * var(--size-ratio)) 0;
   width: 100%;
 }
 
 @media screen and (max-width: 768px) {
   ul.examplesList li {
     flex-direction: column;
-    margin-bottom: 1rem;
+    margin-bottom: calc(1rem * var(--size-ratio));
     border-bottom: 1px solid var(--color-primary);
-    padding: 1rem 0;
+    padding: calc(1rem * var(--size-ratio)) 0;
   }
   .name, .tag, button {
     width: 100%;

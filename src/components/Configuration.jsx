@@ -170,8 +170,8 @@ export default function Configuration() {
           ))}
         </ul>
         <div className={styles.manageExamples}>
-          <div>
-            or {' '}
+          <div className={styles.addExampleContainer}>
+            <span>or</span>
             <button onClick={addExample} disabled={loading} className={styles.addExample}>
               Add example manually
             </button>
@@ -193,14 +193,13 @@ export default function Configuration() {
       )}
       <section className={styles.section}>
         <h3>Compact mode</h3>
-        <label>
+        <label className={styles.compactMode}>
           <input
             type='checkbox'
             checked={compactMode}
             onChange={() => setCompactMode(!compactMode)}
           />
-          <span>{' '}</span>
-          Show tasks more compactly
+          <div>Show tasks more compactly</div>
         </label>
       </section>
       <section className={styles.section}>

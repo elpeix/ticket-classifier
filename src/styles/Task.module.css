@@ -22,6 +22,7 @@
   align-items: center;
   gap: calc(1rem * var(--size-ratio));
   width: 100%;
+  padding: 0 calc(0.6rem * var(--size-ratio)) 0 0;
 }
 
 .task.editMode {
