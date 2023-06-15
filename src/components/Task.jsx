@@ -101,7 +101,7 @@ export default function Task({ task, tags }) {
           />
         </div>
       )}
-      <div className={`${styles.task}`}>
+      <div className={`${styles.task} ${editMode ? styles.editMode : ''}`}>
         {editMode && (
           <input
             ref={taskEditRef}

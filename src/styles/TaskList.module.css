@@ -14,10 +14,14 @@
   justify-content: space-between;
   font-size: calc(1.4rem * var(--size-ratio));
   width: 100%;
-  padding: calc(1rem * var(--size-ratio)) calc(1rem * var(--size-ratio)) calc(1rem * var(--size-ratio)) calc(0.9rem * var(--size-ratio));
+  padding: 
+    calc(.9rem * var(--size-ratio))
+    calc(1rem * var(--size-ratio))
+    calc(1rem * var(--size-ratio))
+    calc(.9rem * var(--size-ratio));
   border-bottom: 1px solid var(--color-primary);
   width: 100%;
-  gap: calc(1rem * var(--size-ratio));
+  gap: calc(0.5rem * var(--size-ratio));
   transition: background-color 0.25s;
 }
 .list li:first-child {

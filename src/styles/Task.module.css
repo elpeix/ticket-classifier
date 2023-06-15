@@ -24,6 +24,10 @@
   width: 100%;
 }
 
+.task.editMode {
+  padding-left: calc(0.2rem * var(--size-ratio));
+}
+
 .name{
   width: 100%;
 }
@@ -31,7 +35,11 @@
 div.name {
   transition: background-color 0.1s;
   border-radius: 0.4rem;
-  padding: calc(0.4rem * var(--size-ratio)) calc(0.2rem * var(--size-ratio));
+  padding: 
+    calc(0.4rem * var(--size-ratio))
+    calc(0.2rem * var(--size-ratio))
+    calc(0.4rem * var(--size-ratio))
+    calc(0.6rem * var(--size-ratio));
   user-select: none;
   display: flex;
   align-items: center;
@@ -54,6 +62,7 @@ div.name:hover {
   height: calc(1.5rem * var(--size-ratio));
   cursor: pointer;
   opacity: 0.5;
+  margin: calc(.1rem * var(--size-ratio)) 0 calc(-.1rem * var(--size-ratio));
   transition: opacity 0.1s ease-in-out;
 }
 div.name:hover .editIcon {
