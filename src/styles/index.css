@@ -123,6 +123,7 @@ header {
 main {
   padding: 0 0 calc(1rem * var(--size-ratio)) 0;
   width: 100%;
+  min-width: 10rem;
   max-width: 56rem;
 }
 
