@@ -6,11 +6,9 @@ import useTheme from '../hooks/useTheme'
 
 export const TasksContext = createContext()
 
-
 // TODO: Split function to avoid too many lines
 
-export default function TasksProvider ({ children }) {
-
+export default function TasksProvider({ children }) {
   const { token } = useContext(AppContext)
   const [topic, setTopic] = useState('')
   const [tasks, setTasks] = useState([])
@@ -55,12 +53,12 @@ export default function TasksProvider ({ children }) {
     if (taskInput === '') {
       throw new Error('Task cannot be empty')
     }
-    
+
     // Get tags from taskInput
     let tags = taskInput.match(/#[\w-]+/g)
     let tag = ''
     if (tags) {
-      tags = tags.map(tag => tag.replace('#', ''))
+      tags = tags.map((tag) => tag.replace('#', ''))
       tag = tags[0]
     }
 
@@ -71,7 +69,7 @@ export default function TasksProvider ({ children }) {
       throw new Error('Task cannot be empty')
     }
 
-    if (tasks.some(task => task.name === taskInput)) {
+    if (tasks.some((task) => task.name === taskInput)) {
       throw new Error('Task already exists')
     }
     const id = new Date().getTime()
@@ -91,14 +89,14 @@ export default function TasksProvider ({ children }) {
     }
 
     getTag(taskInput)
-      .then(tag => {
+      .then((tag) => {
         if (tag) {
           newTask.tag = tag
           saveTasks([...newTasks, newTask])
         }
         setLoading(false)
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err)
         setLoading(false)
       })
@@ -124,27 +122,30 @@ export default function TasksProvider ({ children }) {
   const getAllExamples = () => {
     let examples = []
     // Get examples from sample tasks
-    sampleTasks.forEach(task => {
-      task.tag && examples.push({
-        text: task.name,
-        label: task.tag
-      })
+    sampleTasks.forEach((task) => {
+      task.tag &&
+        examples.push({
+          text: task.name,
+          label: task.tag
+        })
     })
 
     // Get examples from current tasks
-    tasks.forEach(task => {
-      task.tag && examples.push({ 
-        text: task.name, 
-        label: task.tag
-      })
+    tasks.forEach((task) => {
+      task.tag &&
+        examples.push({
+          text: task.name,
+          label: task.tag
+        })
     })
 
     // Get more examples from archived tasks
-    archivedTasks.forEach(task => {
-      task.tag && examples.push({
-        text: task.name,
-        label: task.tag
-      })
+    archivedTasks.forEach((task) => {
+      task.tag &&
+        examples.push({
+          text: task.name,
+          label: task.tag
+        })
     })
     return examples
   }
@@ -154,7 +155,7 @@ export default function TasksProvider ({ children }) {
 
     // Check if there are enough examples and at least 2 labels from each tag
     const labels = {}
-    examples.forEach(example => {
+    examples.forEach((example) => {
       if (labels[example.label]) {
         if (labels[example.label] < 4) {
           labels[example.label]++
@@ -164,7 +165,7 @@ export default function TasksProvider ({ children }) {
       labels[example.label] = 1
     })
 
-    examples = examples.filter(example => {
+    examples = examples.filter((example) => {
       return labels[example.label] > 1
     })
 
@@ -177,26 +178,32 @@ export default function TasksProvider ({ children }) {
 
   const getTags = () => {
     const tags = {}
-    getAllExamples().forEach(example => tags[example.label] = true)
+    getAllExamples().forEach((example) => (tags[example.label] = true))
     return Object.keys(tags)
   }
 
   const updateTask = (id, updatedTask) => {
-    if (Object.keys(updatedTask).length === 0 || Object.hasOwn(updateTask, 'name') && updatedTask.name === '') {
+    if (
+      Object.keys(updatedTask).length === 0 ||
+      (Object.hasOwn(updateTask, 'name') && updatedTask.name === '')
+    ) {
       throw new Error('Task cannot be empty')
     }
-    if (updatedTask.name && tasks.some(task => task.name === updatedTask.name && task.id !== id)) {
+    if (
+      updatedTask.name &&
+      tasks.some((task) => task.name === updatedTask.name && task.id !== id)
+    ) {
       throw new Error('Task already exists')
     }
 
     const newTasks = [...tasks]
-    const task = newTasks.find(task => task.id === id)
+    const task = newTasks.find((task) => task.id === id)
     if (!task) {
       throw new Error('Task not found')
     }
     Object.assign(task, updatedTask)
     saveTasks(newTasks)
-  }    
+  }
 
   const filterByTag = (tag) => {
     setFilter({ ...filter, tag: filter.tag === tag ? '' : tag })
@@ -216,21 +223,27 @@ export default function TasksProvider ({ children }) {
       return { ...task, index }
     })
     if (filter.tag) {
-      filteredTasks = tasks.filter(task => task.tag === filter.tag)
+      filteredTasks = tasks.filter((task) => task.tag === filter.tag)
     }
     if (filter.status) {
-      filteredTasks = filteredTasks.filter(task => task.completed === (filter.status === 'completed'))
+      filteredTasks = filteredTasks.filter(
+        (task) => task.completed === (filter.status === 'completed')
+      )
     }
     if (filter.name) {
-      filteredTasks = filteredTasks.filter(task => task.name.toLowerCase().includes(filter.name.toLowerCase()))
+      filteredTasks = filteredTasks.filter((task) =>
+        task.name.toLowerCase().includes(filter.name.toLowerCase())
+      )
     }
-    return filteredTasks.map(task => {
+    return filteredTasks.map((task) => {
       const newTask = { ...task, selected: false }
       if (filter.name) {
         const index = newTask.name.toLowerCase().indexOf(filter.name.toLowerCase())
         newTask.name = [
           newTask.name.substring(0, index),
-          <span className="highlight" key={index}>{newTask.name.substring(index, index + filter.name.length)}</span>,
+          <span className="highlight" key={index}>
+            {newTask.name.substring(index, index + filter.name.length)}
+          </span>,
           newTask.name.substring(index + filter.name.length)
         ]
       }
@@ -242,10 +255,12 @@ export default function TasksProvider ({ children }) {
   }, [tasks, filter, selectedTask])
 
   const cleanCompletedTasks = () => {
-    const newArchivedTasks = archivedTasks.concat(tasks.filter(task => task.completed && task.tag))
+    const newArchivedTasks = archivedTasks.concat(
+      tasks.filter((task) => task.completed && task.tag)
+    )
     setArchivedTasks(newArchivedTasks)
     localStorage.setItem('archivedTasks', JSON.stringify(newArchivedTasks))
-    saveTasks(tasks.filter(task => !task.completed))
+    saveTasks(tasks.filter((task) => !task.completed))
   }
 
   const cleanArchivedTasks = () => {
@@ -265,13 +280,36 @@ export default function TasksProvider ({ children }) {
     localStorage.setItem('sampleTasks', JSON.stringify(newSampleTasks))
   }
 
+  const moveTask = (id, direction) => {
+    if (direction !== 'up' && direction !== 'down') {
+      throw new Error('Invalid direction')
+    }
+    const newTasks = [...tasks]
+    const index = newTasks.findIndex((task) => task.id === id)
+    if (index === -1) {
+      throw new Error('Task not found')
+    }
+    if (direction === 'up' && index > 0) {
+      const temp = newTasks[index]
+      newTasks[index] = newTasks[index - 1]
+      newTasks[index - 1] = temp
+      setSelectedTask(temp)
+    } else if (direction === 'down' && index < newTasks.length - 1) {
+      const temp = newTasks[index]
+      newTasks[index] = newTasks[index + 1]
+      newTasks[index + 1] = temp
+      setSelectedTask(temp)
+    }
+    saveTasks(newTasks)
+  }
+
   const removeTask = (id) => {
     saveTasks(tasks.filter((task) => task.id !== id))
   }
 
   const toggleTask = (id) => {
     const newTasks = [...tasks]
-    const index = newTasks.findIndex(task => task.id === id)
+    const index = newTasks.findIndex((task) => task.id === id)
     newTasks[index].completed = !newTasks[index].completed
     saveTasks(newTasks)
   }
@@ -288,23 +326,23 @@ export default function TasksProvider ({ children }) {
   }
 
   const selectNext = () => {
-    new TaskSelector(filteredTasks).selectNext(t => setSelectedTask(t))
+    new TaskSelector(filteredTasks).selectNext((t) => setSelectedTask(t))
   }
 
   const selectPrevious = () => {
-    new TaskSelector(filteredTasks).selectPrevious(t => setSelectedTask(t))
+    new TaskSelector(filteredTasks).selectPrevious((t) => setSelectedTask(t))
   }
 
   const selectTask = (id) => {
-    new TaskSelector(filteredTasks).select(id, t => setSelectedTask(t))
+    new TaskSelector(filteredTasks).select(id, (t) => setSelectedTask(t))
   }
 
   const selectFirst = () => {
-    new TaskSelector(filteredTasks).selectFirst(t => setSelectedTask(t))
+    new TaskSelector(filteredTasks).selectFirst((t) => setSelectedTask(t))
   }
 
   const selectLast = () => {
-    new TaskSelector(filteredTasks).selectLast(t => setSelectedTask(t))
+    new TaskSelector(filteredTasks).selectLast((t) => setSelectedTask(t))
   }
 
   const setEditing = (mode) => {
@@ -335,9 +373,9 @@ export default function TasksProvider ({ children }) {
   }
 
   const elements = {
-    tasks : filteredTasks,
+    tasks: filteredTasks,
     totalTasks: tasks.length,
-    filter : {
+    filter: {
       status: filter.status,
       tag: filter.tag,
       name: filter.name,
@@ -348,8 +386,8 @@ export default function TasksProvider ({ children }) {
     totals: {
       total: tasks.length,
       filtered: filteredTasks.length != tasks.length ? filteredTasks.length : null,
-      completed: tasks.filter(task => task.completed).length,
-      pending: tasks.filter(task => !task.completed).length
+      completed: tasks.filter((task) => task.completed).length,
+      pending: tasks.filter((task) => !task.completed).length
     },
     selection: {
       clean: () => setSelectedTask(null),
@@ -358,12 +396,13 @@ export default function TasksProvider ({ children }) {
       first: selectFirst,
       last: selectLast,
       selected: selectedTask,
-      select: selectTask,
+      select: selectTask
     },
     addTask,
     lastAdded,
     updateTask,
     toggleTask,
+    moveTask,
     removeTask,
     getTags,
     cleanCompletedTasks,
@@ -387,10 +426,6 @@ export default function TasksProvider ({ children }) {
     compactMode,
     setCompactMode
   }
-  
-  return (
-    <TasksContext.Provider value={elements}>
-      {children}
-    </TasksContext.Provider>
-  )
+
+  return <TasksContext.Provider value={elements}>{children}</TasksContext.Provider>
 }

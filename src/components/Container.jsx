@@ -67,6 +67,14 @@ export default function Container() {
     if (event.altKey && event.key === ',') {
       tasks.setConfigurationMode(true)
     }
+    if (tasks.selection.selected && event.altKey && event.key === 'j') {
+      tasks.moveTask(tasks.selection.selected.id, 'down')
+      return
+    }
+    if (tasks.selection.selected && event.altKey && event.key === 'k') {
+      tasks.moveTask(tasks.selection.selected.id, 'up')
+      return
+    }
     if (event.key === 'ArrowUp' || event.key === 'k') {
       tasks.selection.previous()
     }
@@ -87,7 +95,7 @@ export default function Container() {
     ) {
       tasks.selection.last()
     }
-    if (event.key === 'Delete' || event.key === 'd') {
+    if ((event.key === 'Delete' || event.key === 'd') && tasks.selection.selected) {
       tasks.removeTask(tasks.selection.selected.id)
     }
     if ((event.key === 'Enter' || event.key === 'x') && tasks.selection.selected) {
