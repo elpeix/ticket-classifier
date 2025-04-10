@@ -10,10 +10,9 @@ import Layout from './Layout'
 import TasksCounter from './TasksCounter'
 import Help from './Help'
 
-export default function Container () {
-
+export default function Container() {
   const tasks = useContext(TasksContext)
-  const showConfiguration = tasks.configurationMode 
+  const showConfiguration = tasks.configurationMode
   const [showHelp, setShowHelp] = useState(false)
   const ref = useRef()
 
@@ -27,18 +26,20 @@ export default function Container () {
     if (tasks.loading || tasks.editing || tasks.adding || tasks.searching) {
       return
     }
-    if (event.key === 'F5' 
-      || event.ctrlKey && event.key === 'r'
-      || event.metaKey && event.key === 'r'
-      || event.ctrlKey && event.key === 'F5'
-      || event.metaKey && event.key === 'F5'
-      || event.key === 'Tab') {
+    if (
+      event.key === 'F5' ||
+      (event.ctrlKey && event.key === 'r') ||
+      (event.metaKey && event.key === 'r') ||
+      (event.ctrlKey && event.key === 'F5') ||
+      (event.metaKey && event.key === 'F5') ||
+      event.key === 'Tab'
+    ) {
       return
     }
     if (event.key === 'Escape') {
       if (tasks.configurationMode) {
         tasks.setConfigurationMode(false)
-      } else if ( tasks.filter.tag !== '') {
+      } else if (tasks.filter.tag !== '') {
         tasks.filter.filterByTag('')
       }
       tasks.selection.clean()
@@ -46,12 +47,12 @@ export default function Container () {
         setShowHelp(false)
       }
     }
-    
+
     if (tasks.configurationMode) {
       return
     }
-  
-    if (event.key === 'h') {
+
+    if (event.key === 'h' || event.key === '?') {
       setShowHelp(!showHelp)
       return
     }
@@ -66,41 +67,52 @@ export default function Container () {
     if (event.altKey && event.key === ',') {
       tasks.setConfigurationMode(true)
     }
-    if (event.key === 'ArrowUp') {
+    if (event.key === 'ArrowUp' || event.key === 'k') {
       tasks.selection.previous()
     }
-    if (event.key === 'ArrowDown') {
+    if (event.key === 'ArrowDown' || event.key === 'j') {
       tasks.selection.next()
     }
-    if (event.key === 'ArrowLeft' || event.key === 'PageUp') {
+    if (
+      event.key === 'ArrowLeft' ||
+      event.key === 'PageUp' ||
+      (event.shiftKey && event.key === 'K')
+    ) {
       tasks.selection.first()
     }
-    if (event.key === 'ArrowRight' || event.key === 'PageDown') {
+    if (
+      event.key === 'ArrowRight' ||
+      event.key === 'PageDown' ||
+      (event.shiftKey && event.key === 'J')
+    ) {
       tasks.selection.last()
     }
-    if (event.key === 'Delete') {
+    if (event.key === 'Delete' || event.key === 'd') {
       tasks.removeTask(tasks.selection.selected.id)
     }
-    if (event.key === 'Enter' && tasks.selection.selected) {
+    if ((event.key === 'Enter' || event.key === 'x') && tasks.selection.selected) {
       tasks.toggleTask(tasks.selection.selected.id)
     }
-    if (event.key === ' ' && tasks.selection.selected) {
+    if ((event.key === ' ' || event.key === 'c') && tasks.selection.selected) {
       tasks.setEditing(tasks.selection.selected)
     }
     if (event.key === 'a') {
       tasks.setAdding(true)
     }
-    if (event.key === 'f') {
+    if (event.key === 'f' || event.key === '/') {
       tasks.setSearching(true)
     }
-    if (event.key === 'p') {
+    if (event.shiftKey && event.key === 'A') {
+      tasks.filter.filterByStatus('')
+    }
+    if (event.shiftKey && event.key === 'P') {
       if (tasks.filter.status === 'pending') {
         tasks.filter.filterByStatus('')
       } else {
         tasks.filter.filterByStatus('pending')
       }
     }
-    if (event.key === 'c') {
+    if (event.shiftKey && event.key === 'C') {
       if (tasks.filter.status === 'completed') {
         tasks.filter.filterByStatus('')
       } else {
@@ -110,18 +122,19 @@ export default function Container () {
   }
 
   return (
-    <div className={styles.tasksContainer} ref={ref} onKeyDown={handleKeyDown} tabIndex='0'>
+    <div className={styles.tasksContainer} ref={ref} onKeyDown={handleKeyDown} tabIndex="0">
       <Layout>
-        { tasks.loading && <div className={styles.loading} /> }
-        { !tasks.loading && showConfiguration  && <Configuration />}
-        { !tasks.loading && !showConfiguration && (
+        {tasks.loading && <div className={styles.loading} />}
+        {!tasks.loading && showConfiguration && <Configuration />}
+        {!tasks.loading && !showConfiguration && (
           <>
             <div className={styles.topic}>
               <h2>{tasks.topic}</h2>
-              <button 
-                className={`simpleButton ${styles.configureButton}`} 
+              <button
+                className={`simpleButton ${styles.configureButton}`}
                 onClick={() => tasks.setConfigurationMode(true)}
-                title='Configure (Alt+,)'>
+                title="Configure (Alt+,)"
+              >
                 Configure
               </button>
             </div>
@@ -135,8 +148,12 @@ export default function Container () {
               <div>
                 <TasksCounter />
               </div>
-              <button className={`simpleButton ${styles.helpButton}`} onClick={() => setShowHelp(!showHelp)} title="Help (h)">
-                <span className='material-icons'>?</span>
+              <button
+                className={`simpleButton ${styles.helpButton}`}
+                onClick={() => setShowHelp(!showHelp)}
+                title="Help (h)"
+              >
+                <span className="material-icons">?</span>
               </button>
             </div>
           </>
