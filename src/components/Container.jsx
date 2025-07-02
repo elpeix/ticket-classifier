@@ -67,11 +67,11 @@ export default function Container() {
     if (event.altKey && event.key === ',') {
       tasks.setConfigurationMode(true)
     }
-    if (tasks.selection.selected && event.altKey && event.key === 'j') {
+    if (tasks.selection.selected && event.altKey && (event.key === 'j' || event.key === '¶')) {
       tasks.moveTask(tasks.selection.selected.id, 'down')
       return
     }
-    if (tasks.selection.selected && event.altKey && event.key === 'k') {
+    if (tasks.selection.selected && event.altKey && (event.key === 'k' || event.key === '§')) {
       tasks.moveTask(tasks.selection.selected.id, 'up')
       return
     }
